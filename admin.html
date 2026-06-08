@@ -124,7 +124,7 @@ table tr:hover td{background:#F0FDF4}
 .det-val{font-size:12px;color:#1a1a2e;font-weight:600;word-break:break-word}
 .det-val.editable{cursor:pointer;padding:3px 6px;border-radius:5px;transition:background .15s}
 .det-val.editable:hover{background:#CCFBF1;color:#065F46}
-.campos-list{max-height:360px;overflow-y:auto}
+.campos-list{max-height:70vh;overflow-y:auto}
 
 .filters{display:flex!important;flex-wrap:wrap!important;gap:10px!important;align-items:flex-end!important}
 .flt{min-width:2800px!important;max-width:220px!important}
@@ -381,7 +381,9 @@ table tr:hover td{background:#F0FDF4}
     </div>
     <div class="fld-edit">
       <label>Nuevo valor <span style="color:#B71C1C">*</span></label>
-      <input type="text" id="editValNuevo" placeholder="Ingrese el nuevo valor..." onkeydown="if(event.key==='Enter')doEditarCampo()">
+      <div id="editInputWrap">
+        <input type="text" id="editValNuevo" placeholder="Ingrese el nuevo valor..." onkeydown="if(event.key==='Enter')doEditarCampo()" style="width:100%;padding:10px 14px;border:1.5px solid var(--b);border-radius:9px;font-size:13px;font-family:inherit">
+      </div>
     </div>
     <div class="fld-edit">
       <label>Clave de administrador <span style="color:#B71C1C">*</span></label>
@@ -406,15 +408,48 @@ var URL_SCRIPT = '';
 var CURRENT_PG = 1;
 var EDIT_DATA = null; // {hoja, fila, col, header, valActual}
 var FULL_H = [
+  // ── I. Información General (cols 1-28) ──────────────────────────────
   "N° Registro","Fecha Ingreso","Matrizador","Notaría","Año","Estado",
-  "N° Matriz","Tipo Interviniente","Fecha Operación","Cuantía USD","Avalúo USD",
+  "N° Matriz","Tipo Interviniente","Fecha Operación","Cuantía USD","Avaluó USD",
   "FP Resumen","Total Pago USD","Entidad Financiera","N° Cuenta","Tipo Cuenta",
   "FP Valor Debitado","FP Valor Crédito","FP Valor Efectivo","FP Cheque",
   "FP Valor Bienes","FP Valor Servicios","FP Tarjeta Crédito",
-  "Tipo de Bien","Dirección del Bien","Moneda","Actos Seleccionados","Otro Acto"
+  "Tipo de Bien","Dirección del Bien","Estado del Bien","Actos Seleccionados","Otro Acto",
+  // ── Padding cols 29-47 (vacíos internos) ────────────────────────────
+  "","","","","","","","","","","","","","","","","","","",
+  // ── II. Identificación del Cliente (cols 48-61) ──────────────────────
+  "Tipo Identificación","Cédula / Pasaporte","Nombres Completos","RUC",
+  "Nacionalidad","Estado Civil","Profesión","Actividad Económica",
+  "Dirección Domiciliaria","Ciudad / Provincia","Teléfono","Correo",
+  "Empresa / Trabajo","Tiempo Actividad",
+  // ── III. Cónyuge / Conviviente (cols 62-72) ──────────────────────────
+  "Cónyuge Tipo ID","Cónyuge Cédula","Cónyuge Nombres","Cónyuge RUC",
+  "Cónyuge Nacionalidad","Cónyuge Profesión","Cónyuge Actividad",
+  "Cónyuge Dirección","Cónyuge Teléfono","Cónyuge Correo","Cónyuge Empresa",
+  // ── IV. Información Tributaria (cols 73-78) ──────────────────────────
+  "Estado RUC","Régimen Tributario","Obligado Contabilidad","Contribuyente Especial",
+  "Fecha Verificación SRI","Resultado SRI",
+  // ── V. Perfil Económico y Origen de Fondos (cols 79-84) ──────────────
+  "Ingreso Mensual USD","Patrimonio USD","Origen de Fondos","Descripción Fondos",
+  "Respaldo Documental","Actúa Cuenta Propia",
+  // ── VI. Beneficiario Final (cols 85-91) ──────────────────────────────
+  "BF Nombres","BF Cédula","BF Nacionalidad","BF Dirección",
+  "BF Teléfono","BF Correo","BF Relación",
+  // ── VII. Persona Jurídica (cols 92-97) ───────────────────────────────
+  "PJ Razón Social","PJ RUC","PJ Representante","PJ CI Representante",
+  "PJ Estructura Compleja","PJ Beneficiarios",
+  // ── VIII. Bases Consultadas (cols 98-99) ─────────────────────────────
+  "Bases Consultadas","Fecha Consulta Bases",
+  // ── IX. PEP (cols 100-104) ────────────────────────────────────────────
+  "Es PEP","PEP Familiar","PEP Entidad","PEP Cargo","PEP Período",
+  // ── XII. Uso Interno / Firma (cols 105-109) ──────────────────────────
+  "Declaración Aceptada","Nombre Compareciente","Fecha Firma",
+  "Funcionario Diligencia","Fecha Diligencia",
+  // ── X-XI. Riesgo y Decisión (cols 110-115) ───────────────────────────
+  "Factores Riesgo","Otro Factor","Nivel Riesgo","Decisión","Observaciones","Fecha Registro"
 ];
-// Cols protegidas (1-based): N°Reg, Fecha Ingreso, Notaría, Año
-var COLS_PROT = [1,2,4,5];
+// Cols protegidas (1-based): N°Reg, Fecha Ingreso, Notaría, Año, Fecha Registro
+var COLS_PROT = [1,2,4,5,115];
 
 function aplicarPeriodo(val) {
   var hoy=new Date(),d1,d2;
@@ -674,6 +709,21 @@ function loadRiesgo() {
 }
 
 // ════ EDITAR REGISTRO ══════════════════════════════════════════════════════
+// Secciones del formulario: [etiqueta, col_inicio_1based, col_fin_1based]
+var SECCIONES_ED = [
+  ['I. Información General de la Operación', 1, 28],
+  ['II. Identificación del Cliente', 48, 61],
+  ['III. Cónyuge / Conviviente', 62, 72],
+  ['IV. Información Tributaria', 73, 78],
+  ['V. Perfil Económico y Origen de Fondos', 79, 84],
+  ['VI. Beneficiario Final', 85, 91],
+  ['VII. Persona Jurídica', 92, 97],
+  ['VIII. Bases Consultadas', 98, 99],
+  ['IX. PEP — Persona Expuesta Políticamente', 100, 104],
+  ['XII. Uso Interno / Firma', 105, 109],
+  ['X-XI. Riesgo y Decisión Institucional', 110, 115]
+];
+
 function buscarParaEditar() {
   var nreg = V('ed-nreg');
   if (!nreg) { alert('Ingrese un N° de Registro (ej: DD-0001)'); return; }
@@ -683,33 +733,53 @@ function buscarParaEditar() {
     var area = E('edArea');
     if (!d || d.status !== 'OK') {
       area.style.display = 'block';
-      E('edAlert').innerHTML = '<div class="alert err">⚠ ' + (d?d.msg:'Sin respuesta del servidor') + '</div>';
+      E('edAlert').innerHTML = '<div class="alert err">&#9888; ' + (d?d.msg:'Sin respuesta del servidor') + '</div>';
       E('camposList').innerHTML = '';
       return;
     }
     area.style.display = 'block';
-    E('edAlert').innerHTML = '<div class="alert ok">✓ Registro encontrado: ' + nreg + '</div>';
+    E('edAlert').innerHTML = '<div class="alert ok">&#10003; Registro encontrado: ' + escHtml(nreg) + '</div>';
     E('edTit').textContent = 'Registro ' + nreg;
     E('edHoja').textContent = 'Hoja: ' + d.hoja + ' | Fila: ' + d.fila;
 
-    // Renderizar todos los campos editables
-    var html = '<div class="det-grid">';
     var datos = d.datos || [];
-    FULL_H.forEach(function(h, i) {
-      if (!h) return;
-      var val = datos[i] !== undefined ? String(datos[i]) : '';
-      var prot = COLS_PROT.indexOf(i+1) >= 0;
-      var col1 = i+1;
-      html += '<div class="det-fld">'+
-        '<div class="det-lbl">'+h+' <span style="color:#9CA3AF;font-size:9px">col '+col1+'</span></div>'+
-        (prot
-          ? '<div class="det-val" style="color:#9CA3AF">'+escHtml(val||'—')+'</div>'
-          : '<div class="det-val editable" title="Clic para editar" onclick="openEditCampo(\''+d.hoja+'\','+d.fila+','+col1+',\''+escJs(h)+'\',\''+escJs(val)+'\')">'+escHtml(val||'—')+'</div>'
-        )+
-        '</div>';
+    // Garantizar 115 posiciones aunque GAS retorne array truncado
+    while (datos.length < 115) { datos.push(''); }
+    var html = '';
+
+    SECCIONES_ED.forEach(function(sec) {
+      var secLabel = sec[0], c1 = sec[1], c2 = sec[2];
+      // Recopilar campos de esta sección que tengan nombre en FULL_H
+      var campos = [];
+      for (var col1 = c1; col1 <= c2; col1++) {
+        var i = col1 - 1; // 0-based index
+        var h = FULL_H[i];
+        if (!h) continue;
+        campos.push({h: h, i: i, col1: col1});
+      }
+      if (!campos.length) return;
+
+      // Encabezado de sección
+      html += '<div style="grid-column:1/-1;background:var(--n);color:#fff;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;margin-top:12px;letter-spacing:.4px">'
+        + secLabel + '</div>';
+
+      campos.forEach(function(f) {
+        var val = (datos[f.i] !== undefined && datos[f.i] !== null && String(datos[f.i]) !== 'null') ? String(datos[f.i]).trim() : '';
+        var prot = COLS_PROT.indexOf(f.col1) >= 0;
+        html += '<div class="det-fld">'
+          + '<div class="det-lbl">' + escHtml(f.h) + ' <span style="color:#9CA3AF;font-size:9px">col ' + f.col1 + '</span></div>'
+          + (prot
+            ? '<div class="det-val" style="color:#9CA3AF;background:#F1F5F9">' + escHtml(val||'—') + '</div>'
+            : '<div class="det-val editable" title="Clic para editar" onclick="openEditCampo(\''
+              + escJs(d.hoja) + '\',' + d.fila + ',' + f.col1 + ',\''
+              + escJs(f.h) + '\',\'' + escJs(val) + '\')">'
+              + escHtml(val||'—') + '</div>'
+          )
+          + '</div>';
+      });
     });
-    html += '</div>';
-    E('camposList').innerHTML = html;
+
+    E('camposList').innerHTML = '<div class="det-grid" style="align-items:start">' + html + '</div>';
   });
 }
 
@@ -722,22 +792,69 @@ function abrirEditar(nreg) {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+// Campos que usan textarea (texto largo)
+var CAMPOS_TEXTAREA = [
+  'Dirección del Bien','Actos Seleccionados','Otro Acto','Dirección Domiciliaria',
+  'Actividad Económica','Empresa / Trabajo','Descripción Fondos','Respaldo Documental',
+  'Cónyuge Actividad','Cónyuge Dirección','BF Dirección','PJ Beneficiarios',
+  'Bases Consultadas','Factores Riesgo','Observaciones','FP Resumen'
+];
+// Campos con opciones predefinidas {nombre: [opciones]}
+var CAMPOS_SELECT = {
+  'Estado':             ['GUARDADO','PENDIENTE','ANULADO'],
+  'Tipo Interviniente': ['Vendedor','Comprador','Deudor Hipotecario','Acreedor Hipotecario','Donante','Donatario','Permutante','Comodatante','Comodatario','Cedente','Cesionario','Otro'],
+  'Estado Civil':       ['Soltero/a','Casado/a','Divorciado/a','Viudo/a','Unión de hecho'],
+  'Cónyuge Tipo ID':    ['Cédula','Pasaporte','RUC'],
+  'Tipo Identificación':['Cédula','Pasaporte','RUC'],
+  'Estado RUC':         ['Activo','Suspendido','Cancelado','No tiene'],
+  'Régimen Tributario': ['General','RIMPE-Emprendedor','RIMPE-Negocio Popular','No aplica'],
+  'Obligado Contabilidad':['Sí','No'],
+  'Contribuyente Especial':['Sí','No'],
+  'Actúa Cuenta Propia':['Sí','No'],
+  'Es PEP':             ['Sí','No'],
+  'PEP Familiar':       ['Sí','No'],
+  'Declaración Aceptada':['Sí','No'],
+  'Nivel Riesgo':       ['BAJO','MEDIO','ALTO','MUY ALTO'],
+  'Decisión':           ['Continuar operación','Continuar con alertas','No continuar operación','En investigación'],
+  'Origen de Fondos':   ['Ahorros propios','Crédito bancario','Venta de inmueble','Actividad comercial','Herencia','Donación','Salario / sueldo','Otro'],
+  'Tipo de Bien':       ['Inmueble urbano','Inmueble rural','Vehículo','Bien mueble','Otro']
+};
+
 function openEditCampo(hoja, fila, col, header, valActual) {
   EDIT_DATA = {hoja:hoja, fila:fila, col:col, header:header, valActual:valActual};
   E('editCampoInfo').innerHTML = '<strong>Campo:</strong> '+escHtml(header)+
     ' &nbsp;|&nbsp; <strong>Columna:</strong> '+col+
     ' &nbsp;|&nbsp; <strong>Hoja:</strong> '+escHtml(hoja)+', Fila '+fila;
   E('editValActual').value = valActual;
-  E('editValNuevo').value = valActual;
   E('editClave').value = '';
   E('editMsg').style.display = 'none';
+
+  // Determinar tipo de input: select, textarea o input
+  var wrap = E('editInputWrap');
+  var opts = CAMPOS_SELECT[header];
+  if (opts) {
+    var selHtml = '<select id="editValNuevo" class="fld-edit" style="width:100%;padding:10px 14px;border:1.5px solid var(--b);border-radius:9px;font-size:13px;font-family:inherit">';
+    selHtml += '<option value="">— Seleccione —</option>';
+    opts.forEach(function(o){ selHtml += '<option value="'+escHtml(o)+'"'+(o===valActual?' selected':'')+'>'+escHtml(o)+'</option>'; });
+    selHtml += '</select>';
+    wrap.innerHTML = selHtml;
+  } else if (CAMPOS_TEXTAREA.indexOf(header) >= 0) {
+    wrap.innerHTML = '<textarea id="editValNuevo" style="width:100%;padding:10px 14px;border:1.5px solid var(--b);border-radius:9px;font-size:13px;font-family:inherit;min-height:90px;resize:vertical">'+escHtml(valActual)+'</textarea>';
+  } else {
+    wrap.innerHTML = '<input type="text" id="editValNuevo" value="'+escHtml(valActual)+'" placeholder="Ingrese el nuevo valor..." style="width:100%;padding:10px 14px;border:1.5px solid var(--b);border-radius:9px;font-size:13px;font-family:inherit" onkeydown="if(event.key===\'Enter\')doEditarCampo()">';
+  }
+
   E('ovEdit').classList.add('show');
-  setTimeout(function(){ E('editValNuevo').focus(); E('editValNuevo').select(); }, 100);
+  setTimeout(function(){
+    var el = E('editValNuevo');
+    if (el) { el.focus(); if (el.select) el.select(); }
+  }, 100);
 }
 
 function doEditarCampo() {
   if (!EDIT_DATA) return;
-  var nuevoVal = V('editValNuevo');
+  var el = E('editValNuevo');
+  var nuevoVal = el ? el.value.trim() : '';
   var clave = V('editClave');
   if (!clave) { showEditMsg('Ingrese la clave de administrador', false); return; }
   if (nuevoVal === EDIT_DATA.valActual) { showEditMsg('El valor no cambió', false); return; }
