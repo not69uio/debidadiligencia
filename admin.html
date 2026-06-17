@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache,no-store">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Panel Administrativo v2.1 — Debida Diligencia</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--n:#1B3A6B;--t:#0D7377;--r:#B71C1C;--g:#065F46;--b:#E2E8F0;--bg:#F0F4F8}
 body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#1a1a2e;font-size:13px;min-height:100vh}
-/* TOPBAR */
 #tb{background:linear-gradient(135deg,#1B3A6B,#0D7377);padding:0 20px;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.3)}
 .tb-l{display:flex;align-items:center;gap:12px}
 .tb-logo{height:34px}
@@ -18,10 +18,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#1a1a2e;
 #sp{font-size:10px;padding:5px 12px;border-radius:12px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.2);font-weight:700}
 #sp.ok{background:#065F46;color:#fff;border-color:#6EE7B7}
 #sp.err{background:#7F1D1D;color:#fff;border-color:#FCA5A5}
-/* LAYOUT */
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 62px);padding:20px}
 #app{display:none;max-width:1200px;margin:0 auto;padding:20px 16px 40px}
-/* LOGIN */
 .login-card{background:#fff;border-radius:16px;padding:40px 36px;max-width:420px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center}
 .login-card .ico{font-size:48px;margin-bottom:16px}
 .login-card h2{font-size:20px;font-weight:800;color:var(--n);margin-bottom:6px}
@@ -31,33 +29,26 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#1a1a2e;
 .btn-p{width:100%;padding:13px;border-radius:10px;font-size:14px;font-weight:700;background:var(--t);color:#fff;border:none;cursor:pointer;font-family:inherit;margin-top:12px;transition:background .2s}
 .btn-p:hover{background:#0a5e63}
 .err-login{background:#FEE2E2;border:1px solid #FCA5A5;border-radius:8px;padding:8px 14px;font-size:12px;color:#7F1D1D;display:none;margin-top:10px}
-/* TABS */
 .tabs{display:flex;gap:4px;background:#fff;border-radius:12px;padding:6px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,.07);flex-wrap:wrap}
 .tab{padding:9px 18px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:#6B7280;transition:all .2s;border:none;background:none;font-family:inherit}
 .tab:hover{background:var(--bg);color:var(--n)}
 .tab.act{background:var(--n);color:#fff;box-shadow:0 2px 8px rgba(27,58,107,.25)}
 .panel{display:none}
 .panel.show{display:block}
-/* FILTROS */
 .filters{background:#fff;border-radius:12px;padding:16px 20px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.07);display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
-.flt{display:flex;flex-direction:column;gap:4px;flex:1;min-width:2800px}
+.flt{display:flex;flex-direction:column;gap:4px;flex:1;min-width:120px;max-width:220px}
 .flt label{font-size:10px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.5px}
 .flt input,.flt select{padding:8px 12px;border:1.5px solid var(--b);border-radius:8px;font-size:12px;font-family:inherit;background:#fff;-webkit-appearance:none}
 .flt input:focus,.flt select:focus{outline:none;border-color:var(--t)}
 .btn-f{padding:9px 20px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:inherit;height:38px;margin-top:auto}
 .btn-f.p{background:var(--t);color:#fff}
 .btn-f.s{background:#fff;color:var(--n);border:2px solid var(--n)}
-/* KPI CARDS */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
 .kpi{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid var(--t)}
-.kpi.red{border-color:#B71C1C}
-.kpi.green{border-color:#2E7D32}
-.kpi.amber{border-color:#B45309}
-.kpi.purple{border-color:#6A1B9A}
+.kpi.red{border-color:#B71C1C}.kpi.green{border-color:#2E7D32}.kpi.amber{border-color:#B45309}.kpi.purple{border-color:#6A1B9A}
 .kpi-val{font-size:28px;font-weight:900;color:var(--n);font-family:monospace;line-height:1}
 .kpi-lbl{font-size:11px;color:#6B7280;margin-top:6px;font-weight:600}
 .kpi-sub{font-size:10px;color:#9CA3AF;margin-top:2px}
-/* GRAFICOS SIMPLES */
 .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
 @media(max-width:700px){.chart-grid{grid-template-columns:1fr}}
 .chart-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
@@ -66,12 +57,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#1a1a2e;
 .bar-lbl{width:120px;flex-shrink:0;color:#374151;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
 .bar-track{flex:1;background:#F1F5F9;border-radius:4px;height:16px;overflow:hidden}
 .bar-fill{height:16px;border-radius:4px;transition:width .5s;background:var(--t)}
-.bar-fill.red{background:#B71C1C}
-.bar-fill.amber{background:#D97706}
-.bar-fill.green{background:#2E7D32}
-.bar-fill.navy{background:var(--n)}
+.bar-fill.red{background:#B71C1C}.bar-fill.amber{background:#D97706}.bar-fill.green{background:#2E7D32}.bar-fill.navy{background:var(--n)}
 .bar-num{width:36px;text-align:right;font-weight:700;color:#374151;font-family:monospace}
-/* TABLA */
 .tbl-wrap{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:16px}
 .tbl-head{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--b)}
 .tbl-head h3{font-size:13px;font-weight:700;color:var(--n)}
@@ -81,17 +68,12 @@ table th{background:#F8FAFC;padding:10px 12px;text-align:left;font-weight:700;co
 table td{padding:9px 12px;border-bottom:1px solid #F8FAFC;vertical-align:middle;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 table tr:hover td{background:#F0FDF4}
 .badge{display:inline-block;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700}
-.badge.g{background:#D1FAE5;color:#065F46}
-.badge.r{background:#FEE2E2;color:#7F1D1D}
-.badge.a{background:#FEF3C7;color:#92400E}
-.badge.p{background:#EDE9FE;color:#5B21B6}
-.badge.b{background:#DBEAFE;color:#1E40AF}
-/* PAGINACION */
+.badge.g{background:#D1FAE5;color:#065F46}.badge.r{background:#FEE2E2;color:#7F1D1D}
+.badge.a{background:#FEF3C7;color:#92400E}.badge.p{background:#EDE9FE;color:#5B21B6}.badge.b{background:#DBEAFE;color:#1E40AF}
 .pag{display:flex;gap:6px;align-items:center;justify-content:center;padding:16px}
 .pag-btn{padding:6px 14px;border-radius:7px;border:1.5px solid var(--b);background:#fff;color:var(--n);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
 .pag-btn.act{background:var(--n);color:#fff;border-color:var(--n)}
 .pag-btn:disabled{opacity:.4;cursor:not-allowed}
-/* MODAL EDITAR */
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:900;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px}
 .ov.show{display:flex}
 .md{background:#fff;border-radius:14px;padding:28px;max-width:600px;width:100%;margin:auto;box-shadow:0 8px 40px rgba(0,0,0,.3)}
@@ -106,17 +88,14 @@ table tr:hover td{background:#F0FDF4}
 .btn-navy{background:var(--n);color:#fff;border:none}
 .btn-out{background:#fff;color:var(--n);border:2px solid var(--n)}
 .btn-danger{background:#B71C1C;color:#fff;border:none}
-/* SPINNER */
 .spin-ov{display:none;position:fixed;inset:0;background:rgba(255,255,255,.8);z-index:800;align-items:center;justify-content:center;flex-direction:column;gap:16px}
 .spin-ov.show{display:flex}
 .spin{width:44px;height:44px;border:4px solid #E2E8F0;border-top-color:var(--t);border-radius:50%;animation:sp .8s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-/* ALERTAS */
 .alert{border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:12px;font-weight:600;display:flex;gap:10px;align-items:center}
 .alert.ok{background:#D1FAE5;color:#065F46;border:1px solid #6EE7B7}
 .alert.err{background:#FEE2E2;color:#7F1D1D;border:1px solid #FCA5A5}
 .alert.info{background:#EDE9FE;color:#5B21B6;border:1px solid #C4B5FD}
-/* DETALLE REGISTRO */
 .det-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:500px){.det-grid{grid-template-columns:1fr}}
 .det-fld{background:#F8FAFC;border-radius:8px;padding:10px 14px}
@@ -125,80 +104,27 @@ table tr:hover td{background:#F0FDF4}
 .det-val.editable{cursor:pointer;padding:3px 6px;border-radius:5px;transition:background .15s}
 .det-val.editable:hover{background:#CCFBF1;color:#065F46}
 .campos-list{max-height:70vh;overflow-y:auto}
-
-.filters{display:flex!important;flex-wrap:wrap!important;gap:10px!important;align-items:flex-end!important}
-.flt{min-width:2800px!important;max-width:220px!important}
+.filters{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:10px!important;align-items:flex-end!important;background:#fff;border-radius:12px;padding:14px 18px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.flt{display:flex!important;flex-direction:column!important;gap:3px!important;flex:1!important;min-width:120px!important;max-width:220px!important}
+.flt label{font-size:10px!important;font-weight:700!important;color:#6B7280!important;text-transform:uppercase!important;letter-spacing:.4px!important;white-space:nowrap!important}
+.flt input,.flt select{padding:8px 10px!important;border:1.5px solid #E2E8F0!important;border-radius:8px!important;font-size:12px!important;font-family:inherit!important;background:#fff!important}
+.btn-f,.btn-print{align-self:flex-end!important;height:36px!important;white-space:nowrap!important;flex-shrink:0!important}
 .btn-print{padding:9px 16px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:inherit;align-self:flex-end;height:36px;background:#6A1B9A;color:#fff}
-@media print{
-  #tb .tb-r,.tabs,.filters,.pag,.eb,.spin-ov,.ov,#btnLogout{display:none!important}
-  #app{padding:0!important}
-  .panel{display:block!important}
-  th{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-}
-
 .btn-edit{background:#1B3A6B;color:#fff;border:none;padding:4px 10px;border-radius:6px;font-size:10px;cursor:pointer;font-family:inherit;font-weight:700}
 @media print{
   #tb .tb-r,.tabs,.filters,.pag,.btn-edit,.btn-print,.spin-ov,#btnLogout,#btnExport{display:none!important}
-  .panel{display:none!important}
-  .panel.show{display:block!important}
+  .panel{display:none!important}.panel.show{display:block!important}
   th{background:#1B3A6B!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 }
-
-/* ── FILTERS ALWAYS IN ROW ── */
-.filters {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  gap: 10px !important;
-  align-items: flex-end !important;
-  background: #fff;
-  border-radius: 12px;
-  padding: 14px 18px;
-  margin-bottom: 14px;
-  box-shadow: 0 1px 4px rgba(0,0,0,.07);
-}
-.flt {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 3px !important;
-  flex: 1 !important;
-  min-width: 120px !important;
-  max-width: 220px !important;
-}
-.flt label {
-  font-size: 10px !important;
-  font-weight: 700 !important;
-  color: #6B7280 !important;
-  text-transform: uppercase !important;
-  letter-spacing: .4px !important;
-  white-space: nowrap !important;
-}
-.flt input, .flt select {
-  padding: 8px 10px !important;
-  border: 1.5px solid #E2E8F0 !important;
-  border-radius: 8px !important;
-  font-size: 12px !important;
-  font-family: inherit !important;
-  background: #fff !important;
-}
-.btn-f, .btn-print {
-  align-self: flex-end !important;
-  height: 36px !important;
-  white-space: nowrap !important;
-  flex-shrink: 0 !important;
-}
-
 </style>
 </head>
 <body>
-
-<!-- TOPBAR -->
 <div id="tb">
   <div class="tb-l">
-    <img class="tb-logo" src="data:image/png;base64,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F83qnGv+DF83qlwtJaKJxr/gxfN6pxr/AIMXzeqXC0loonGv+DF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/gxfN6pcLSWiica/wCDF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/AIMXzeqXC0loonGv+DF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/gxfN6pcLSWiica/wCDF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/AIMXzeqXC0loonGv+DF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/gxfN6pcLSWiica/wCDF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/AIMXzeqXC0loonGv+DF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/gxfN6pcLSWiica/wCDF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/AIMXzeqXC0loonGv+DF83qhrX/Bi+b1S4Wkv/YDtKgVcoll9n9FowF+SzySDDnYb7hyC9ShupZKgREUEhERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREB//9k=" alt="D&amp;S">
+    <img class="tb-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iNDQiIHZpZXdCb3g9IjAgMCAyMDAgNDQiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMUIzQTZCIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzBENTQ3MCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPCEtLSBCYWNrZ3JvdW5kIHJvdW5kZWQgcmVjdGFuZ2xlIC0tPgogIDxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iNDQiIHJ4PSI4IiBmaWxsPSJ1cmwoI2JnKSIvPgogIDwhLS0gQmFyIGNoYXJ0IGljb24gYmFja2dyb3VuZCBzcXVhcmUgKHJvdW5kZWQpIC0tPgogIDxyZWN0IHg9IjgiIHk9IjciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjYiIGZpbGw9IiMwRDlCQjUiLz4KICA8IS0tIEJhciBjaGFydCBiYXJzICh3aGl0ZSkgLS0+CiAgPHJlY3QgeD0iMTQiIHk9IjI0IiB3aWR0aD0iNCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0id2hpdGUiLz4KICA8cmVjdCB4PSIyMCIgeT0iMTkiIHdpZHRoPSI0IiBoZWlnaHQ9IjEzIiByeD0iMSIgZmlsbD0id2hpdGUiLz4KICA8cmVjdCB4PSIyNiIgeT0iMTUiIHdpZHRoPSI0IiBoZWlnaHQ9IjE3IiByeD0iMSIgZmlsbD0id2hpdGUiLz4KICA8IS0tICJTb2x1Y2lvbmVzICIgdGV4dCBpbiB3aGl0ZSAtLT4KICA8dGV4dCB4PSI0NiIgeT0iMjIiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSJ3aGl0ZSI+U29sdWNpb25lczwvdGV4dD4KICA8IS0tICJEJmFtcDtTIiB0ZXh0IGluIGN5YW4gLS0+CiAgPHRleHQgeD0iMTE1IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyMkQzRUUiPiBEJmFtcDtTPC90ZXh0PgogIDwhLS0gU3VidGl0bGUgLS0+CiAgPHRleHQgeD0iNDYiIHk9IjM0IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3IiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjOTREMEUwIiBsZXR0ZXItc3BhY2luZz0iMC41Ij5EQVRBIEFOQUxZVElDUyAmYW1wOyBTT0xVVElPTlM8L3RleHQ+Cjwvc3ZnPg==" alt="D&S">
     <div class="tb-txt">
       <span class="t1">Panel Administrativo</span>
-      <span class="t2">Notar&iacute;a Sexag&eacute;sima novena de Quito &middot; 2026</span>
+      <span class="t2">Notar&iacute;a Sexag&eacute;sima Novena del Cant&oacute;n Quito &middot; 2026</span>
     </div>
   </div>
   <div class="tb-r">
@@ -207,26 +133,21 @@ table tr:hover td{background:#F0FDF4}
   </div>
 </div>
 
-<!-- SPINNER -->
 <div class="spin-ov" id="spinOv"><div class="spin"></div><div style="font-size:13px;color:#555;font-weight:600">Cargando datos...</div></div>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="ico">&#128274;</div>
     <h2>Panel Administrativo</h2>
     <p>Acceso exclusivo para administradores del sistema de Debida Diligencia.<br>Ingrese la clave de acceso para continuar.</p>
-    <input type="hidden" id="lUrl" value="" data-u="aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J4T29jeVhrSm85T1dVcWpNbW16TmtsOVRXTHlQS2xmakNsUzlfQTBucHlIRk1WYnRlQm9hQXpQUGVGNXVPVTVYczBUQS9leGVj">
+    <input type="hidden" id="lUrl" value="" data-u="aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J4SXRhQnlUM21QZEp2Wl8zYU92X2cxT1BqWjhkUjZMMzQ4dVR4V2Uyb0RVOEhycWVjNFRDSjczY2ppSkp0TWh5R2dSZy9leGVj">
     <input type="password" id="lPw" class="inp" placeholder="Clave de administrador" onkeydown="if(event.key==='Enter')doLogin()">
     <button onclick="doLogin()" class="btn-p">Ingresar al Panel</button>
     <div class="err-login" id="lErr"></div>
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
-
-  <!-- TABS -->
   <div class="tabs">
     <button class="tab act" onclick="showTab('resumen')">&#128200; Resumen</button>
     <button class="tab" onclick="showTab('registros')">&#128203; Registros</button>
@@ -235,7 +156,6 @@ table tr:hover td{background:#F0FDF4}
     <button class="tab" onclick="showTab('editar')">&#9998;&#65039; Editar Registro</button>
   </div>
 
-  <!-- ════ PANEL RESUMEN ════ -->
   <div class="panel show" id="p-resumen">
     <div class="filters">
       <div class="flt"><label>A&ntilde;o</label><select id="r-anio"><option value="">Todos</option><option value="2026">2026</option><option value="2025">2025</option></select></div>
@@ -259,19 +179,19 @@ table tr:hover td{background:#F0FDF4}
     </div>
   </div>
 
-  <!-- ════ PANEL REGISTROS ════ -->
-  <div class="panel show" id="p-registros">
+  <div class="panel" id="p-registros">
     <div class="filters">
       <div class="flt"><label>Per&iacute;odo r&aacute;pido</label>
         <select id="rg-periodo" onchange="aplicarPeriodo(this.value)">
           <option value="">-- Seleccione --</option>
+          <option value="anio_actual" selected>Año actual</option>
           <option value="mes_actual">Mes actual</option>
           <option value="mes_anterior">Mes anterior</option>
         </select>
       </div>
       <div class="flt"><label>Desde (Fecha Op.) *</label><input type="date" id="rg-desde"></div>
       <div class="flt"><label>Hasta (Fecha Op.) *</label><input type="date" id="rg-hasta"></div>
-      <input type="hidden" id="rg-anio" value="2026">
+      <div class="flt"><label>A&ntilde;o</label><select id="rg-anio"><option value="">Todos</option><option value="2026" selected>2026</option><option value="2025">2025</option></select></div>
       <div class="flt" style="flex:2;max-width:300px"><label>Buscar (reg, c&eacute;dula, nombre...)</label>
         <input type="text" id="rg-busq" placeholder="Escriba para filtrar..." onkeydown="if(event.key==='Enter')loadRegistros(1)">
       </div>
@@ -284,12 +204,7 @@ table tr:hover td{background:#F0FDF4}
       &#9888; Seleccione un período o ingrese fechas para buscar.
     </div>
     <div class="tbl-wrap">
-      <div class="tbl-head">
-        <h3>Registros</h3>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div class="tbl-info" id="rg-info">-</div>
-        </div>
-      </div>
+      <div class="tbl-head"><h3>Registros</h3><div style="display:flex;align-items:center;gap:12px"><div class="tbl-info" id="rg-info">-</div></div></div>
       <div style="overflow-x:auto">
         <table id="tblReg" style="min-width:2800px">
           <thead><tr><th>N° Registro</th><th>Fecha Ingreso</th><th>Matrizador</th><th>Notaría</th><th>Año</th><th>Estado</th><th>N° Matriz</th><th>Tipo Interviniente</th><th>Fecha Operación</th><th>Cuantía USD</th><th>Avaluó USD</th><th>FP Resumen</th><th>Total Pago USD</th><th>Entidad Financiera</th><th>N° Cuenta</th><th>Tipo Cuenta</th><th>FP Valor Debitado</th><th>FP Valor Crédito</th><th>FP Valor Efectivo</th><th>FP Cheque</th><th>FP Valor Bienes</th><th>FP Valor Servicios</th><th>FP Tarjeta Crédito</th><th>Tipo de Bien</th><th>Dirección del Bien</th><th>Estado del Bien</th><th>Actos Seleccionados</th><th>Otro Acto</th><th>Tipo Identificación</th><th>Cédula / Pasaporte</th><th>Nombres Completos</th><th>RUC</th><th>Nacionalidad</th><th>Estado Civil</th><th>Profesión</th><th>Actividad Económica</th><th>Dirección Domiciliaria</th><th>Ciudad / Provincia</th><th>Teléfono</th><th>Correo</th><th>Empresa / Trabajo</th><th>Tiempo Actividad</th><th>Cónyuge Tipo ID</th><th>Cónyuge Cédula</th><th>Cónyuge Nombres</th><th>Cónyuge RUC</th><th>Cónyuge Nacionalidad</th><th>Cónyuge Profesión</th><th>Cónyuge Actividad</th><th>Cónyuge Dirección</th><th>Cónyuge Teléfono</th><th>Cónyuge Correo</th><th>Cónyuge Empresa</th><th>Estado RUC</th><th>Régimen Tributario</th><th>Obligado Contabilidad</th><th>Contribuyente Especial</th><th>Fecha Verificación SRI</th><th>Resultado SRI</th><th>Ingreso Mensual USD</th><th>Patrimonio USD</th><th>Origen de Fondos</th><th>Descripción Fondos</th><th>Respaldo Documental</th><th>Actúa Cuenta Propia</th><th>BF Nombres</th><th>BF Cédula</th><th>BF Nacionalidad</th><th>BF Dirección</th><th>BF Teléfono</th><th>BF Correo</th><th>BF Relación</th><th>PJ Razón Social</th><th>PJ RUC</th><th>PJ Representante</th><th>PJ CI Representante</th><th>PJ Estructura Compleja</th><th>PJ Beneficiarios</th><th>Bases Consultadas</th><th>Fecha Consulta Bases</th><th>Es PEP</th><th>PEP Familiar</th><th>PEP Entidad</th><th>PEP Cargo</th><th>PEP Período</th><th>Declaración Aceptada</th><th>Nombre Compareciente</th><th>Fecha Firma</th><th>Funcionario Diligencia</th><th>Fecha Diligencia</th><th>Factores Riesgo</th><th>Otro Factor</th><th>Nivel Riesgo</th><th>Decisión</th><th>Observaciones</th><th>Fecha Registro</th><th>Acc.</th></tr></thead>
@@ -312,23 +227,16 @@ table tr:hover td{background:#F0FDF4}
       <div class="tbl-head"><h3>&#127758; Intervinientes Extranjeros</h3><div class="tbl-info" id="ex-info">—</div></div>
       <div style="overflow-x:auto"><table id="tblEx">
         <thead><tr><th>N° Reg</th><th>N° Matriz</th><th>Fecha Op.</th><th>Tipo ID</th><th>Cédula / Pasaporte</th><th>Nombres Completos</th><th>Nacionalidad</th><th>Tipo Interviniente</th><th>Riesgo</th></tr></thead>
-        <tbody id="bodyEx"><tr><td colspan="97" style="text-align:center;padding:30px;color:#9CA3AF">Aplique filtros y consulte</td></tr></tbody>
+        <tbody id="bodyEx"><tr><td colspan="9" style="text-align:center;padding:30px;color:#9CA3AF">Aplique filtros y consulte</td></tr></tbody>
       </table></div>
     </div>
   </div>
 
-  <!-- ════ PANEL RIESGO ════ -->
   <div class="panel" id="p-riesgo">
     <div class="filters">
       <div class="flt"><label>A&ntilde;o</label><select id="rs-anio"><option value="">Todos</option><option value="2026">2026</option><option value="2025">2025</option></select></div>
       <div class="flt"><label>Nivel de Riesgo</label>
-        <select id="rs-nivel">
-          <option value="">Todos</option>
-          <option value="MUY ALTO">MUY ALTO</option>
-          <option value="ALTO">ALTO</option>
-          <option value="MEDIO">MEDIO</option>
-          <option value="BAJO">BAJO</option>
-        </select>
+        <select id="rs-nivel"><option value="">Todos</option><option value="MUY ALTO">MUY ALTO</option><option value="ALTO">ALTO</option><option value="MEDIO">MEDIO</option><option value="BAJO">BAJO</option></select>
       </div>
       <div class="flt"><label>Desde</label><input type="date" id="rs-desde"></div>
       <div class="flt"><label>Hasta</label><input type="date" id="rs-hasta"></div>
@@ -339,12 +247,11 @@ table tr:hover td{background:#F0FDF4}
       <div class="tbl-head"><h3>&#9888;&#65039; Registros por Nivel de Riesgo</h3><div class="tbl-info" id="rs-info">—</div></div>
       <div style="overflow-x:auto"><table id="tblRs">
         <thead><tr><th>N° Reg</th><th>N° Matriz</th><th>Fecha Op.</th><th>Cédula</th><th>Nombres</th><th>Tipo Int.</th><th>Riesgo</th><th>Decisión</th><th>Matrizador</th><th>Acc.</th></tr></thead>
-        <tbody id="bodyRs"><tr><td colspan="97" style="text-align:center;padding:30px;color:#9CA3AF">Aplique filtros y consulte</td></tr></tbody>
+        <tbody id="bodyRs"><tr><td colspan="10" style="text-align:center;padding:30px;color:#9CA3AF">Aplique filtros y consulte</td></tr></tbody>
       </table></div>
     </div>
   </div>
 
-  <!-- ════ PANEL EDITAR ════ -->
   <div class="panel" id="p-editar">
     <div class="filters">
       <div class="flt" style="flex:2"><label>N&uacute;mero de Registro (ej: DD-0001)</label>
@@ -356,39 +263,24 @@ table tr:hover td{background:#F0FDF4}
       <div class="tbl-wrap">
         <div class="tbl-head">
           <h3 id="edTit">Registro —</h3>
-          <div style="font-size:11px;color:#6B7280" id="edHoja"></div>
+          <div style="display:flex;align-items:center;gap:12px"><div style="font-size:11px;color:#6B7280" id="edHoja"></div><button id="btnPrintEd" onclick="imprimirRegistroEditado()" style="display:none;padding:7px 16px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;background:#1B3A6B;color:#fff;font-family:inherit">&#128438; Imprimir</button></div>
         </div>
         <div class="cb" style="padding:16px 20px">
-          <p style="font-size:12px;color:#6B7280;margin-bottom:14px">
-            &#128204; Haga clic en el valor de cualquier campo para editarlo. Los campos en gris oscuro est&aacute;n protegidos.
-          </p>
+          <p style="font-size:12px;color:#6B7280;margin-bottom:14px">&#128204; Haga clic en el valor de cualquier campo para editarlo.</p>
           <div class="campos-list" id="camposList"></div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-</div><!-- /app -->
-
-<!-- MODAL EDITAR CAMPO -->
 <div class="ov" id="ovEdit">
   <div class="md">
     <h3>&#9998;&#65039; Editar campo</h3>
     <div id="editCampoInfo" style="background:#F8FAFC;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#374151"></div>
-    <div class="fld-edit">
-      <label>Valor actual</label>
-      <input type="text" id="editValActual" disabled style="background:#F8FAFC;color:#9CA3AF">
-    </div>
-    <div class="fld-edit">
-      <label>Nuevo valor <span style="color:#B71C1C">*</span></label>
-      <div id="editInputWrap">
-        <input type="text" id="editValNuevo" placeholder="Ingrese el nuevo valor..." onkeydown="if(event.key==='Enter')doEditarCampo()" style="width:100%;padding:10px 14px;border:1.5px solid var(--b);border-radius:9px;font-size:13px;font-family:inherit">
-      </div>
-    </div>
-    <div class="fld-edit">
-      <label>Clave de administrador <span style="color:#B71C1C">*</span></label>
-      <input type="password" id="editClave" placeholder="Clave admin requerida para guardar">
-    </div>
+    <div class="fld-edit"><label>Valor actual</label><input type="text" id="editValActual" disabled style="background:#F8FAFC;color:#9CA3AF"></div>
+    <div class="fld-edit" id="editInputWrap"><label>Nuevo valor <span style="color:#B71C1C">*</span></label><input type="text" id="editValNuevo" placeholder="Ingrese el nuevo valor..."></div>
+    <div class="fld-edit"><label>Clave de administrador <span style="color:#B71C1C">*</span></label><input type="password" id="editClave" placeholder="Clave admin requerida para guardar"></div>
     <div id="editMsg" style="display:none;padding:8px 12px;border-radius:7px;font-size:11px;margin-top:8px"></div>
     <div class="btn-row">
       <button onclick="doEditarCampo()" class="btn-navy">&#128190; Guardar cambio</button>
@@ -397,148 +289,79 @@ table tr:hover td{background:#F0FDF4}
   </div>
 </div>
 
-<script>var DATOS_EXPORT=[];
-
+<script>
+var DATOS_EXPORT=[];
 function fmtF(v){if(!v)return'-';var s=String(v).trim();if(/^\d{4}-\d{2}-\d{2}/.test(s)){var p=s.slice(0,10).split('-');return p[2]+'/'+p[1]+'/'+p[0];}var n=parseFloat(s);if(!isNaN(n)&&n>40000){var dt=new Date(Math.round((n-25569)*86400*1000));return('0'+dt.getDate()).slice(-2)+'/'+('0'+(dt.getMonth()+1)).slice(-2)+'/'+dt.getFullYear();}return s.slice(0,10);}
 function fmtN(v){var n=parseFloat(v);return isNaN(n)?'0.00':n.toLocaleString('es-EC',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function badgeRiesgo(v){var m={'MUY ALTO':'r','ALTO':'a','MEDIO':'a','BAJO':'g'};return v?'<td><span class="badge '+(m[v]||'b')+'">'+v+'</span></td>':'<td>-</td>';}
 
-// ════ CONFIG ════════════════════════════════════════════════════════════
-var URL_SCRIPT = '';
-var CURRENT_PG = 1;
-var EDIT_DATA = null; // {hoja, fila, col, header, valActual}
-var FULL_H = [
-  // ── I. Información General (cols 1-28) ──────────────────────────────
-  "N° Registro","Fecha Ingreso","Matrizador","Notaría","Año","Estado",
-  "N° Matriz","Tipo Interviniente","Fecha Operación","Cuantía USD","Avaluó USD",
-  "FP Resumen","Total Pago USD","Entidad Financiera","N° Cuenta","Tipo Cuenta",
-  "FP Valor Debitado","FP Valor Crédito","FP Valor Efectivo","FP Cheque",
-  "FP Valor Bienes","FP Valor Servicios","FP Tarjeta Crédito",
-  "Tipo de Bien","Dirección del Bien","Estado del Bien","Actos Seleccionados","Otro Acto",
-  // ── Padding cols 29-47 (vacíos internos) ────────────────────────────
-  "","","","","","","","","","","","","","","","","","","",
-  // ── II. Identificación del Cliente (cols 48-61) ──────────────────────
-  "Tipo Identificación","Cédula / Pasaporte","Nombres Completos","RUC",
-  "Nacionalidad","Estado Civil","Profesión","Actividad Económica",
-  "Dirección Domiciliaria","Ciudad / Provincia","Teléfono","Correo",
-  "Empresa / Trabajo","Tiempo Actividad",
-  // ── III. Cónyuge / Conviviente (cols 62-72) ──────────────────────────
-  "Cónyuge Tipo ID","Cónyuge Cédula","Cónyuge Nombres","Cónyuge RUC",
-  "Cónyuge Nacionalidad","Cónyuge Profesión","Cónyuge Actividad",
-  "Cónyuge Dirección","Cónyuge Teléfono","Cónyuge Correo","Cónyuge Empresa",
-  // ── IV. Información Tributaria (cols 73-78) ──────────────────────────
-  "Estado RUC","Régimen Tributario","Obligado Contabilidad","Contribuyente Especial",
-  "Fecha Verificación SRI","Resultado SRI",
-  // ── V. Perfil Económico y Origen de Fondos (cols 79-84) ──────────────
-  "Ingreso Mensual USD","Patrimonio USD","Origen de Fondos","Descripción Fondos",
-  "Respaldo Documental","Actúa Cuenta Propia",
-  // ── VI. Beneficiario Final (cols 85-91) ──────────────────────────────
-  "BF Nombres","BF Cédula","BF Nacionalidad","BF Dirección",
-  "BF Teléfono","BF Correo","BF Relación",
-  // ── VII. Persona Jurídica (cols 92-97) ───────────────────────────────
-  "PJ Razón Social","PJ RUC","PJ Representante","PJ CI Representante",
-  "PJ Estructura Compleja","PJ Beneficiarios",
-  // ── VIII. Bases Consultadas (cols 98-99) ─────────────────────────────
-  "Bases Consultadas","Fecha Consulta Bases",
-  // ── IX. PEP (cols 100-104) ────────────────────────────────────────────
-  "Es PEP","PEP Familiar","PEP Entidad","PEP Cargo","PEP Período",
-  // ── XII. Uso Interno / Firma (cols 105-109) ──────────────────────────
-  "Declaración Aceptada","Nombre Compareciente","Fecha Firma",
-  "Funcionario Diligencia","Fecha Diligencia",
-  // ── X-XI. Riesgo y Decisión (cols 110-115) ───────────────────────────
-  "Factores Riesgo","Otro Factor","Nivel Riesgo","Decisión","Observaciones","Fecha Registro"
-];
-// Cols protegidas (1-based): N°Reg, Fecha Ingreso, Notaría, Año, Fecha Registro
-var COLS_PROT = [1,2,4,5,115];
+var URL_SCRIPT='';
+var CURRENT_PG=1;
+var EDIT_DATA=null;
+var FULL_H=["N° Registro","Fecha Ingreso","Matrizador","Notaría","Año","Estado","N° Matriz","Tipo Interviniente","Fecha Operación","Cuantía USD","Avaluó USD","FP Resumen","Total Pago USD","Entidad Financiera","N° Cuenta","Tipo Cuenta","FP Valor Debitado","FP Valor Crédito","FP Valor Efectivo","FP Cheque","FP Valor Bienes","FP Valor Servicios","FP Tarjeta Crédito","Tipo de Bien","Dirección del Bien","Moneda","Actos Seleccionados","Otro Acto","","","","","","","","","","","","","","","","","","","","","","Tipo Identificación","Cédula / Pasaporte","Nombres Completos","RUC","Nacionalidad","Estado Civil","Profesión","Actividad Económica","Dirección Domiciliaria","Ciudad / Provincia","Teléfono","Correo","Empresa / Trabajo","Tiempo Actividad","Cónyuge Tipo ID","Cónyuge Cédula","Cónyuge Nombres","Cónyuge RUC","Cónyuge Nacionalidad","Cónyuge Profesión","Cónyuge Actividad","Cónyuge Dirección","Cónyuge Teléfono","Cónyuge Correo","Cónyuge Empresa","Estado RUC","Régimen Tributario","Obligado Contabilidad","Contribuyente Especial","Fecha Verificación SRI","Resultado SRI","Ingreso Mensual USD","Patrimonio USD","Origen de Fondos","Descripción Fondos","Respaldo Documental","Actúa Cuenta Propia","BF Nombres","BF Cédula","BF Nacionalidad","BF Dirección","BF Teléfono","BF Correo","BF Relación","PJ Razón Social","PJ RUC","PJ Representante","PJ CI Representante","PJ Estructura Compleja","PJ Beneficiarios","Bases Consultadas","Fecha Consulta Bases","Es PEP","PEP Familiar","PEP Entidad","PEP Cargo","PEP Período","Declaración Aceptada","Nombre Compareciente","Fecha Firma","Funcionario Diligencia","Fecha Diligencia","Factores Riesgo","Otro Factor","Nivel Riesgo","Decisión","Observaciones","Fecha Registro"];
+var COLS_PROT=[1,2,4,5,115];
 
-function aplicarPeriodo(val) {
+function E(id){return document.getElementById(id);}
+function V(id){var e=E(id);return e?e.value.trim():'';}
+
+function aplicarPeriodo(val){
   var hoy=new Date(),d1,d2;
   if(val==='mes_actual'){d1=new Date(hoy.getFullYear(),hoy.getMonth(),1);d2=new Date(hoy.getFullYear(),hoy.getMonth()+1,0);}
   else if(val==='mes_anterior'){d1=new Date(hoy.getFullYear(),hoy.getMonth()-1,1);d2=new Date(hoy.getFullYear(),hoy.getMonth(),0);}
+  else if(val==='anio_actual'){d1=new Date(hoy.getFullYear(),0,1);d2=new Date(hoy.getFullYear(),11,31);}
   else{return;}
   function fmt(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
   if(E('rg-desde'))E('rg-desde').value=fmt(d1);
   if(E('rg-hasta'))E('rg-hasta').value=fmt(d2);
 }
-function clearFiltrosReg() {
-  ['rg-desde','rg-hasta','rg-busq','rg-periodo'].forEach(function(id){var e=E(id);if(e)e.value='';});
+function clearFiltrosReg(){
+  ['rg-desde','rg-hasta','rg-busq'].forEach(function(id){var e=E(id);if(e)e.value='';});
+  aplicarPeriodo('anio_actual');
+  if(E('rg-periodo'))E('rg-periodo').value='anio_actual';
   if(E('bodyReg'))E('bodyReg').innerHTML='<tr><td colspan="97" style="text-align:center;padding:24px;color:#9CA3AF">Seleccione un período y busque</td></tr>';
   if(E('rg-info'))E('rg-info').textContent='';
 }
 
-function E(id){ return document.getElementById(id); }
-function V(id){ var e=E(id); return e?e.value.trim():''; }
-
-// ════ LOGIN ══════════════════════════════════════════════════════════════
-function doLogin() {
-  if (E('lPw').value === atob('YWRtaW4yMDI2')) {
-    URL_SCRIPT = atob(E('lUrl').dataset.u);
-    E('login-screen').style.display = 'none';
-    E('app').style.display = 'block';
-    E('btnLogout').style.display = '';
-    E('sp').textContent = '✓ Conectado'; E('sp').className = 'ok';
-    aplicarPeriodo('mes_actual');
-    if(E('rg-periodo')) E('rg-periodo').value = 'mes_actual';
+function doLogin(){
+  if(E('lPw').value===atob('YWRtaW4yMDI2')){
+    URL_SCRIPT = (function(){var _$=['aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2','Z5Y2J4SXRhQnlUM21QZEp2Wl8zYU92X2cxT1BqWjhkUjZMMzQ4','dVR4V2Uyb0RVOEhycWVjNFRDSjczY2ppSkp0TWh5R2dSZy9leGVj'];return atob(_$[0])+atob(_$[1])+atob(_$[2]);})();
+    E('login-screen').style.display='none';E('app').style.display='block';E('btnLogout').style.display='';
+    E('sp').textContent='✓ Conectado';E('sp').className='ok';
+    aplicarPeriodo('anio_actual');if(E('rg-periodo'))E('rg-periodo').value='anio_actual';
     loadResumen();
-  } else {
-    showLErr('Clave incorrecta');
-    E('lPw').focus();
-  }
+  }else{showLErr('Clave incorrecta');E('lPw').focus();}
 }
-function showLErr(msg){ E('lErr').style.display='block'; E('lErr').textContent=msg; }
-function doLogout(){
-  URL_SCRIPT=''; localStorage.removeItem('dd_admin_url');
-  E('login-screen').style.display='flex'; E('app').style.display='none';
-  E('btnLogout').style.display='none'; E('sp').textContent='Sin conexión'; E('sp').className='';
+function showLErr(msg){E('lErr').style.display='block';E('lErr').textContent=msg;}
+function doLogout(){URL_SCRIPT='';E('login-screen').style.display='flex';E('app').style.display='none';E('btnLogout').style.display='none';E('sp').textContent='Sin conexión';E('sp').className='';}
+
+function showTab(tab){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('show');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('act');});
+  E('p-'+tab).classList.add('show');event.target.classList.add('act');
 }
 
-// ════ TABS ════════════════════════════════════════════════════════════════
-function showTab(tab) {
-  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('show'); });
-  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('act'); });
-  E('p-'+tab).classList.add('show');
-  event.target.classList.add('act');
-}
-
-// ════ RESUMEN ═════════════════════════════════════════════════════════════
-function loadResumen() {
+function loadResumen(){
   spin(true);
-  var p = {action:'reporte_resumen',anio:V('r-anio'),desde:V('r-desde'),hasta:V('r-hasta')};
-  jsonp(URL_SCRIPT, p, function(d) {
+  jsonp(URL_SCRIPT,{action:'reporte_resumen',anio:V('r-anio'),desde:V('r-desde'),hasta:V('r-hasta')},function(d){
     spin(false);
-    if (!d || d.status !== 'OK') { alert('Error: ' + (d?d.msg:'sin respuesta')); return; }
-    E('k-total').textContent = d.total || 0;
-    E('k-guard').textContent = d.guardados || 0;
-    E('k-monto').textContent = '$' + fmtNum(d.montoTotal);
-    E('k-ext').textContent = d.extranjeros || 0;
-    E('k-int').textContent = d.totalInt || 0;
-    renderBars('chartRiesgo', d.porRiesgo, {'MUY ALTO':'red','ALTO':'amber','MEDIO':'amber','BAJO':'green','SIN':'navy'});
-    renderBars('chartTipoInt', d.porTipoInt, {});
-    renderBars('chartMat', d.porMatrizador, {});
-    renderBars('chartMes', d.porMes, {});
+    if(!d||d.status!=='OK'){alert('Error: '+(d?d.msg:'sin respuesta'));return;}
+    E('k-total').textContent=d.total||0;E('k-guard').textContent=d.guardados||0;
+    E('k-monto').textContent='$'+fmtNum(d.montoTotal);E('k-ext').textContent=d.extranjeros||0;E('k-int').textContent=d.totalInt||0;
+    renderBars('chartRiesgo',d.porRiesgo,{'MUY ALTO':'red','ALTO':'amber','MEDIO':'amber','BAJO':'green','SIN':'navy'});
+    renderBars('chartTipoInt',d.porTipoInt,{});renderBars('chartMat',d.porMatrizador,{});renderBars('chartMes',d.porMes,{});
   });
 }
-
-function renderBars(containerId, data, colors) {
-  var cont = E(containerId); if (!cont) return;
-  var entries = Object.entries(data||{}).sort(function(a,b){ return b[1]-a[1]; }).slice(0,8);
-  if (!entries.length) { cont.innerHTML = '<div style="color:#9CA3AF;font-size:11px;text-align:center;padding:20px">Sin datos</div>'; return; }
-  var max = Math.max.apply(null, entries.map(function(e){ return e[1]; })) || 1;
-  cont.innerHTML = entries.map(function(e) {
-    var pct = Math.round((e[1]/max)*100);
-    var cls = (colors[e[0]] || 'navy');
-    return '<div class="bar-row"><div class="bar-lbl" title="'+e[0]+'">'+e[0]+'</div>'+
-      '<div class="bar-track"><div class="bar-fill '+cls+'" style="width:'+pct+'%"></div></div>'+
-      '<div class="bar-num">'+e[1]+'</div></div>';
-  }).join('');
+function renderBars(containerId,data,colors){
+  var cont=E(containerId);if(!cont)return;
+  var entries=Object.entries(data||{}).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
+  if(!entries.length){cont.innerHTML='<div style="color:#9CA3AF;font-size:11px;text-align:center;padding:20px">Sin datos</div>';return;}
+  var max=Math.max.apply(null,entries.map(function(e){return e[1];}));
+  cont.innerHTML=entries.map(function(e){var pct=Math.round((e[1]/max)*100);var cls=(colors[e[0]]||'navy');return'<div class="bar-row"><div class="bar-lbl" title="'+e[0]+'">'+e[0]+'</div><div class="bar-track"><div class="bar-fill '+cls+'" style="width:'+pct+'%"></div></div><div class="bar-num">'+e[1]+'</div></div>';}).join('');
 }
 
-// ════ REGISTROS ════════════════════════════════════════════════════════════
 function loadRegistros(pg){
   var desde=V('rg-desde'),hasta=V('rg-hasta'),busq=V('rg-busq');
-  if(!desde&&!hasta&&!busq){if(E('rg-warn'))E('rg-warn').style.display='block';return;}
   if(E('rg-warn'))E('rg-warn').style.display='none';
-  CURRENT_PG=pg||1; spin(true);
+  CURRENT_PG=pg||1;spin(true);
   jsonp(URL_SCRIPT,{action:'reporte_registros',anio:V('rg-anio')||'',desde:desde,hasta:hasta,busq:encodeURIComponent(busq||''),pagina:CURRENT_PG},function(d){
     spin(false);
     if(!d||d.status!=='OK'){alert('Error: '+(d?d.msg:'sin respuesta'));return;}
@@ -546,107 +369,8 @@ function loadRegistros(pg){
     if(E('rg-info'))E('rg-info').textContent=d.total+' registros encontrados';
     var ex=E('btnExport');if(ex)ex.style.display=d.total>0?'inline-block':'none';
     var html='';
-    console.log('GS data sample:', d.registros&&d.registros[0]?{cedula:d.registros[0].cedula,nombres:d.registros[0].nombres,nacion:d.registros[0].nacion,ecivil:d.registros[0].ecivil}:'no data');
     (d.registros||[]).forEach(function(r){
-      var cells=[
-      '<td><strong>'+(r.nreg||'-')+'</strong></td>',
-      '<td>'+fmtF(r.fecha)+'</td>',
-      '<td>'+(r.mat||'-')+'</td>',
-      '<td>'+(r.notaria||'-')+'</td>',
-      '<td>'+(r.anio||'-')+'</td>',
-      '<td><span class="badge g">'+(r.estado||'-')+'</span></td>',
-      '<td>'+(r.nmat||'-')+'</td>',
-      '<td><span class="badge b">'+(r.tipo_int||'-')+'</span></td>',
-      '<td>'+fmtF(r.fecha_op)+'</td>',
-      '<td>'+(+r.cuantia?'$'+fmtN(r.cuantia):'-')+'</td>',
-      '<td>'+(+r.avaluo?'$'+fmtN(r.avaluo):'-')+'</td>',
-      '<td>'+(r.fp_resumen||'-')+'</td>',
-      '<td>'+(+r.total?'$'+fmtN(r.total):'-')+'</td>',
-      '<td>'+(r.entidad||'-')+'</td>',
-      '<td>'+(r.nro_cta||'-')+'</td>',
-      '<td>'+(r.tipo_cta||'-')+'</td>',
-      '<td>'+(+r.fp_debito?'$'+fmtN(r.fp_debito):'-')+'</td>',
-      '<td>'+(+r.fp_credito?'$'+fmtN(r.fp_credito):'-')+'</td>',
-      '<td>'+(+r.fp_efectivo?'$'+fmtN(r.fp_efectivo):'-')+'</td>',
-      '<td>'+(+r.fp_cheque?'$'+fmtN(r.fp_cheque):'-')+'</td>',
-      '<td>'+(+r.fp_bienes?'$'+fmtN(r.fp_bienes):'-')+'</td>',
-      '<td>'+(+r.fp_servicios?'$'+fmtN(r.fp_servicios):'-')+'</td>',
-      '<td>'+(+r.fp_tarjeta?'$'+fmtN(r.fp_tarjeta):'-')+'</td>',
-      '<td>'+(r.tipo_bien||'-')+'</td>',
-      '<td>'+(r.dir_bien||'-')+'</td>',
-      '<td>'+(r.moneda||'-')+'</td>',
-      '<td>'+(r.actos||'-')+'</td>',
-      '<td>'+(r.otro_acto||'-')+'</td>',
-      '<td>'+(r.tipo_id||'-')+'</td>',
-      '<td>'+(r.cedula||'-')+'</td>',
-      '<td>'+(r.nombres||'-')+'</td>',
-      '<td>'+(r.ruc||'-')+'</td>',
-      '<td>'+(r.nacion||'-')+'</td>',
-      '<td>'+(r.ecivil||'-')+'</td>',
-      '<td>'+(r.profesion||'-')+'</td>',
-      '<td>'+(r.actividad||'-')+'</td>',
-      '<td>'+(r.direccion||'-')+'</td>',
-      '<td>'+(r.ciudad||'-')+'</td>',
-      '<td>'+(r.telefono||'-')+'</td>',
-      '<td>'+(r.correo||'-')+'</td>',
-      '<td>'+(r.empresa||'-')+'</td>',
-      '<td>'+(r.tact||'-')+'</td>',
-      '<td>'+(r.c_tipo_id||'-')+'</td>',
-      '<td>'+(r.c_cedula||'-')+'</td>',
-      '<td>'+(r.c_nombres||'-')+'</td>',
-      '<td>'+(r.c_ruc||'-')+'</td>',
-      '<td>'+(r.c_nacion||'-')+'</td>',
-      '<td>'+(r.c_prof||'-')+'</td>',
-      '<td>'+(r.c_act||'-')+'</td>',
-      '<td>'+(r.c_dir||'-')+'</td>',
-      '<td>'+(r.c_tel||'-')+'</td>',
-      '<td>'+(r.c_correo||'-')+'</td>',
-      '<td>'+(r.c_empresa||'-')+'</td>',
-      '<td>'+(r.eruc||'-')+'</td>',
-      '<td>'+(r.regimen||'-')+'</td>',
-      '<td>'+(r.oblig||'-')+'</td>',
-      '<td>'+(r.contrib||'-')+'</td>',
-      '<td>'+fmtF(r.fsri)+'</td>',
-      '<td>'+(r.rsri||'-')+'</td>',
-      '<td>'+(+r.ingreso?'$'+fmtN(r.ingreso):'-')+'</td>',
-      '<td>'+(+r.patrimonio?'$'+fmtN(r.patrimonio):'-')+'</td>',
-      '<td>'+(r.ofondos||'-')+'</td>',
-      '<td>'+(r.odetalle||'-')+'</td>',
-      '<td>'+(r.respaldo||'-')+'</td>',
-      '<td>'+(r.cpropia||'-')+'</td>',
-      '<td>'+(r.bf_nom||'-')+'</td>',
-      '<td>'+(r.bf_ced||'-')+'</td>',
-      '<td>'+(r.bf_nac||'-')+'</td>',
-      '<td>'+(r.bf_dir||'-')+'</td>',
-      '<td>'+(r.bf_tel||'-')+'</td>',
-      '<td>'+(r.bf_correo||'-')+'</td>',
-      '<td>'+(r.bf_rel||'-')+'</td>',
-      '<td>'+(r.pj_razon||'-')+'</td>',
-      '<td>'+(r.pj_ruc||'-')+'</td>',
-      '<td>'+(r.pj_rep||'-')+'</td>',
-      '<td>'+(r.pj_ci||'-')+'</td>',
-      '<td>'+(r.pj_estr||'-')+'</td>',
-      '<td>'+(r.pj_ben||'-')+'</td>',
-      '<td>'+(r.bases||'-')+'</td>',
-      '<td>'+fmtF(r.fbases)+'</td>',
-      '<td>'+(r.espep||'-')+'</td>',
-      '<td>'+(r.pepfam||'-')+'</td>',
-      '<td>'+(r.pepent||'-')+'</td>',
-      '<td>'+(r.pepcargo||'-')+'</td>',
-      '<td>'+(r.pepperiodo||'-')+'</td>',
-      '<td>'+(r.dacept||'-')+'</td>',
-      '<td>'+(r.ncomp||'-')+'</td>',
-      '<td>'+fmtF(r.ffirma)+'</td>',
-      '<td>'+(r.func_dilig||'-')+'</td>',
-      '<td>'+fmtF(r.fdilig)+'</td>',
-      '<td>'+(r.factores||'-')+'</td>',
-      '<td>'+(r.otro_factor||'-')+'</td>',
-      badgeRiesgo(r.riesgo),
-      '<td>'+(r.decision||'-')+'</td>',
-      '<td>'+(r.obs||'-')+'</td>',
-      '<td>'+fmtF(r.fecha_reg)+'</td>',
-      '<td><button onclick="abrirEditar(\''+r.nreg+'\')" class="btn-edit">Editar</button></td>'
-      ];
+      var cells=['<td><strong>'+(r.nreg||'-')+'</strong></td>','<td>'+fmtF(r.fecha)+'</td>','<td>'+(r.mat||'-')+'</td>','<td>'+(r.notaria||'-')+'</td>','<td>'+(r.anio||'-')+'</td>','<td><span class="badge g">'+(r.estado||'-')+'</span></td>','<td>'+(r.nmat||'-')+'</td>','<td><span class="badge b">'+(r.tipo_int||'-')+'</span></td>','<td>'+fmtF(r.fecha_op)+'</td>','<td>'+(+r.cuantia?'$'+fmtN(r.cuantia):'-')+'</td>','<td>'+(+r.avaluo?'$'+fmtN(r.avaluo):'-')+'</td>','<td>'+(r.fp_resumen||'-')+'</td>','<td>'+(+r.total?'$'+fmtN(r.total):'-')+'</td>','<td>'+(r.entidad||'-')+'</td>','<td>'+(r.nro_cta||'-')+'</td>','<td>'+(r.tipo_cta||'-')+'</td>','<td>'+(+r.fp_debito?'$'+fmtN(r.fp_debito):'-')+'</td>','<td>'+(+r.fp_credito?'$'+fmtN(r.fp_credito):'-')+'</td>','<td>'+(+r.fp_efectivo?'$'+fmtN(r.fp_efectivo):'-')+'</td>','<td>'+(+r.fp_cheque?'$'+fmtN(r.fp_cheque):'-')+'</td>','<td>'+(+r.fp_bienes?'$'+fmtN(r.fp_bienes):'-')+'</td>','<td>'+(+r.fp_servicios?'$'+fmtN(r.fp_servicios):'-')+'</td>','<td>'+(+r.fp_tarjeta?'$'+fmtN(r.fp_tarjeta):'-')+'</td>','<td>'+(r.tipo_bien||'-')+'</td>','<td>'+(r.dir_bien||'-')+'</td>','<td>'+(r.moneda||'-')+'</td>','<td>'+(r.actos||'-')+'</td>','<td>'+(r.otro_acto||'-')+'</td>','<td>'+(r.tipo_id||'-')+'</td>','<td>'+(r.cedula||'-')+'</td>','<td>'+(r.nombres||'-')+'</td>','<td>'+(r.ruc||'-')+'</td>','<td>'+(r.nacion||'-')+'</td>','<td>'+(r.ecivil||'-')+'</td>','<td>'+(r.profesion||'-')+'</td>','<td>'+(r.actividad||'-')+'</td>','<td>'+(r.direccion||'-')+'</td>','<td>'+(r.ciudad||'-')+'</td>','<td>'+(r.telefono||'-')+'</td>','<td>'+(r.correo||'-')+'</td>','<td>'+(r.empresa||'-')+'</td>','<td>'+(r.tact||'-')+'</td>','<td>'+(r.c_tipo_id||'-')+'</td>','<td>'+(r.c_cedula||'-')+'</td>','<td>'+(r.c_nombres||'-')+'</td>','<td>'+(r.c_ruc||'-')+'</td>','<td>'+(r.c_nacion||'-')+'</td>','<td>'+(r.c_prof||'-')+'</td>','<td>'+(r.c_act||'-')+'</td>','<td>'+(r.c_dir||'-')+'</td>','<td>'+(r.c_tel||'-')+'</td>','<td>'+(r.c_correo||'-')+'</td>','<td>'+(r.c_empresa||'-')+'</td>','<td>'+(r.eruc||'-')+'</td>','<td>'+(r.regimen||'-')+'</td>','<td>'+(r.oblig||'-')+'</td>','<td>'+(r.contrib||'-')+'</td>','<td>'+fmtF(r.fsri)+'</td>','<td>'+(r.rsri||'-')+'</td>','<td>'+(+r.ingreso?'$'+fmtN(r.ingreso):'-')+'</td>','<td>'+(+r.patrimonio?'$'+fmtN(r.patrimonio):'-')+'</td>','<td>'+(r.ofondos||'-')+'</td>','<td>'+(r.odetalle||'-')+'</td>','<td>'+(r.respaldo||'-')+'</td>','<td>'+(r.cpropia||'-')+'</td>','<td>'+(r.bf_nom||'-')+'</td>','<td>'+(r.bf_ced||'-')+'</td>','<td>'+(r.bf_nac||'-')+'</td>','<td>'+(r.bf_dir||'-')+'</td>','<td>'+(r.bf_tel||'-')+'</td>','<td>'+(r.bf_correo||'-')+'</td>','<td>'+(r.bf_rel||'-')+'</td>','<td>'+(r.pj_razon||'-')+'</td>','<td>'+(r.pj_ruc||'-')+'</td>','<td>'+(r.pj_rep||'-')+'</td>','<td>'+(r.pj_ci||'-')+'</td>','<td>'+(r.pj_estr||'-')+'</td>','<td>'+(r.pj_ben||'-')+'</td>','<td>'+(r.bases||'-')+'</td>','<td>'+fmtF(r.fbases)+'</td>','<td>'+(r.espep||'-')+'</td>','<td>'+(r.pepfam||'-')+'</td>','<td>'+(r.pepent||'-')+'</td>','<td>'+(r.pepcargo||'-')+'</td>','<td>'+(r.pepperiodo||'-')+'</td>','<td>'+(r.dacept||'-')+'</td>','<td>'+(r.ncomp||'-')+'</td>','<td>'+fmtF(r.ffirma)+'</td>','<td>'+(r.func_dilig||'-')+'</td>','<td>'+fmtF(r.fdilig)+'</td>','<td>'+(r.factores||'-')+'</td>','<td>'+(r.otro_factor||'-')+'</td>','<td>'+(r.riesgo?'<span class="badge '+(r.riesgo==='MUY ALTO'||r.riesgo==='ALTO'?'r':'g')+'">'+r.riesgo+'</span>':'-')+'</td>','<td>'+(r.decision||'-')+'</td>','<td>'+(r.obs||'-')+'</td>','<td>'+fmtF(r.fecha_reg)+'</td>','<td><button onclick="abrirEditar(\''+r.nreg+'\')" class="btn-edit">Editar</button></td>'];
       html+='<tr>'+cells.join('')+'</tr>';
     });
     if(E('bodyReg'))E('bodyReg').innerHTML=html||'<tr><td colspan="97" style="text-align:center;padding:24px;color:#9CA3AF">Sin resultados</td></tr>';
@@ -654,315 +378,118 @@ function loadRegistros(pg){
   });
 }
 
-// ════ EXTRANJEROS ══════════════════════════════════════════════════════════
-function loadExtranjeros() {
+function loadExtranjeros(){
   spin(true);
   jsonp(URL_SCRIPT,{action:'reporte_extranjeros',anio:V('ex-anio'),desde:V('ex-desde'),hasta:V('ex-hasta')},function(d){
-    spin(false);
-    if(!d||d.status!=='OK'){alert('Error: '+(d?d.msg:'sin respuesta'));return;}
+    spin(false);if(!d||d.status!=='OK'){alert('Error: '+(d?d.msg:'sin respuesta'));return;}
     if(E('ex-info'))E('ex-info').textContent=d.total+' intervinientes extranjeros';
     var html='';
-    console.log('GS data sample:', d.registros&&d.registros[0]?{cedula:d.registros[0].cedula,nombres:d.registros[0].nombres,nacion:d.registros[0].nacion,ecivil:d.registros[0].ecivil}:'no data');
-    (d.registros||[]).forEach(function(r){
-      html+='<tr>'+
-        '<td>'+(r.nreg||'-')+'</td>'+
-        '<td>'+(r.nmat||'-')+'</td>'+
-        '<td>'+fmtF(r.fecha_op)+'</td>'+
-        '<td>'+(r.tipo_id||'-')+'</td>'+
-        '<td>'+(r.cedula||'-')+'</td>'+
-        '<td>'+(r.nombres||'-')+'</td>'+
-        '<td>'+(r.nacion||'-')+'</td>'+
-        '<td><span class="badge b">'+(r.tipo_int||'-')+'</span></td>'+
-        badgeRiesgo(r.riesgo)+
-        '</tr>';
-    });
+    (d.registros||[]).forEach(function(r){html+='<tr><td>'+(r.nreg||'-')+'</td><td>'+(r.nmat||'-')+'</td><td>'+fmtF(r.fecha_op)+'</td><td>'+(r.tipo_id||'-')+'</td><td>'+(r.cedula||'-')+'</td><td>'+(r.nombres||'-')+'</td><td>'+(r.nacion||'-')+'</td><td><span class="badge b">'+(r.tipo_int||'-')+'</span></td><td>'+(r.riesgo?'<span class="badge '+(r.riesgo==='MUY ALTO'||r.riesgo==='ALTO'?'r':'g')+'">'+r.riesgo+'</span>':'-')+'</td></tr>';});
     if(E('bodyEx'))E('bodyEx').innerHTML=html||'<tr><td colspan="9" style="text-align:center;padding:24px;color:#9CA3AF">Sin intervinientes extranjeros</td></tr>';
   });
 }
 
-// ════ RIESGO ═══════════════════════════════════════════════════════════════
-function loadRiesgo() {
+function loadRiesgo(){
   spin(true);
-  var p = {action:'reporte_riesgo',anio:V('rs-anio'),
-    nivel:encodeURIComponent(V('rs-nivel')),desde:V('rs-desde'),hasta:V('rs-hasta')};
-  jsonp(URL_SCRIPT, p, function(d) {
-    spin(false);
-    if (!d || d.status !== 'OK') { alert('Error: '+(d?d.msg:'sin respuesta')); return; }
-    E('rs-info').textContent = d.total + ' registros encontrados';
-    var html = '';
-    (d.registros||[]).forEach(function(r) {
-      html += '<tr>'+
-        '<td>'+r.nreg+'</td>'+
-        '<td>'+r.nmat+'</td>'+
-        '<td>'+fmtFecha(r.fecha_op)+'</td>'+
-        '<td>'+r.cedula+'</td>'+
-        '<td title="'+r.nombres+'">'+r.nombres+'</td>'+
-        '<td>'+r.tipo_int+'</td>'+
-        '<td>'+badgeRiesgo(r.riesgo)+'</td>'+
-        '<td title="'+r.obs+'">'+r.decision+'</td>'+
-        '<td>'+r.mat+'</td>'+
-        '<td><button onclick="abrirEditar(\''+r.nreg+'\')" style="background:var(--n);color:#fff;border:none;padding:4px 10px;border-radius:6px;font-size:10px;cursor:pointer;font-family:inherit;font-weight:700">Editar</button></td>'+
-        '</tr>';
-    });
-    E('bodyRs').innerHTML = html || '<tr><td colspan="97" style="text-align:center;padding:24px;color:#9CA3AF">Sin resultados</td></tr>';
+  jsonp(URL_SCRIPT,{action:'reporte_riesgo',anio:V('rs-anio'),nivel:encodeURIComponent(V('rs-nivel')),desde:V('rs-desde'),hasta:V('rs-hasta')},function(d){
+    spin(false);if(!d||d.status!=='OK'){alert('Error: '+(d?d.msg:'sin respuesta'));return;}
+    E('rs-info').textContent=d.total+' registros encontrados';
+    var html='';
+    (d.registros||[]).forEach(function(r){html+='<tr><td>'+r.nreg+'</td><td>'+r.nmat+'</td><td>'+fmtF(r.fecha_op)+'</td><td>'+r.cedula+'</td><td>'+r.nombres+'</td><td>'+r.tipo_int+'</td><td>'+(r.riesgo?'<span class="badge '+(r.riesgo==='MUY ALTO'||r.riesgo==='ALTO'?'r':'g')+'">'+r.riesgo+'</span>':'-')+'</td><td>'+r.decision+'</td><td>'+r.mat+'</td><td><button onclick="abrirEditar(\''+r.nreg+'\')" class="btn-edit">Editar</button></td></tr>';});
+    E('bodyRs').innerHTML=html||'<tr><td colspan="10" style="text-align:center;padding:24px;color:#9CA3AF">Sin resultados</td></tr>';
   });
 }
 
-// ════ EDITAR REGISTRO ══════════════════════════════════════════════════════
-// Secciones del formulario: [etiqueta, col_inicio_1based, col_fin_1based]
-var SECCIONES_ED = [
-  ['I. Información General de la Operación', 1, 28],
-  ['II. Identificación del Cliente', 48, 61],
-  ['III. Cónyuge / Conviviente', 62, 72],
-  ['IV. Información Tributaria', 73, 78],
-  ['V. Perfil Económico y Origen de Fondos', 79, 84],
-  ['VI. Beneficiario Final', 85, 91],
-  ['VII. Persona Jurídica', 92, 97],
-  ['VIII. Bases Consultadas', 98, 99],
-  ['IX. PEP — Persona Expuesta Políticamente', 100, 104],
-  ['XII. Uso Interno / Firma', 105, 109],
-  ['X-XI. Riesgo y Decisión Institucional', 110, 115]
-];
+var SECCIONES_ED=[["I. Información General de la Operación",1,28],["II. Identificación del Cliente",48,61],["III. Cónyuge / Conviviente",62,72],["IV. Información Tributaria",73,78],["V. Perfil Económico y Origen de Fondos",79,84],["VI. Beneficiario Final",85,91],["VII. Persona Jurídica",92,97],["VIII. Bases Consultadas",98,99],["IX. PEP — Persona Expuesta Políticamente",100,104],["XII. Uso Interno / Firma",105,109],["X-XI. Riesgo y Decisión Institucional",110,115]];
+var CAMPOS_SELECT={"Estado":["GUARDADO","PENDIENTE","ANULADO"],"Tipo Interviniente":["Vendedor","Comprador","Deudor Hipotecario","Acreedor Hipotecario","Donante","Donatario","Permutante","Otro"],"Estado Civil":["Soltero/a","Casado/a","Divorciado/a","Viudo/a","Unión de hecho"],"Tipo Identificación":["Cédula","Pasaporte","RUC"],"Cónyuge Tipo ID":["Cédula","Pasaporte","RUC"],"Estado RUC":["Activo","Suspendido","Cancelado","No tiene"],"Régimen Tributario":["General","RIMPE-Emprendedor","RIMPE-Negocio Popular","No aplica"],"Obligado Contabilidad":["Sí","No"],"Contribuyente Especial":["Sí","No"],"Actúa Cuenta Propia":["Sí","No"],"Es PEP":["Sí","No"],"PEP Familiar":["Sí","No"],"Declaración Aceptada":["Sí","No"],"Nivel Riesgo":["BAJO","MEDIO","ALTO","MUY ALTO"],"Decisión":["Continuar operación","Continuar con alertas","No continuar operación","En investigación"],"Origen de Fondos":["Ahorros propios","Crédito bancario","Venta de inmueble","Actividad comercial","Herencia","Donación","Salario / sueldo","Otro"]};
+var CAMPOS_TEXTAREA=["Dirección del Bien","Actos Seleccionados","Otro Acto","Dirección Domiciliaria","Actividad Económica","Empresa / Trabajo","Descripción Fondos","Respaldo Documental","Cónyuge Actividad","Cónyuge Dirección","BF Dirección","PJ Beneficiarios","Bases Consultadas","Factores Riesgo","Observaciones","FP Resumen"];
 
-function buscarParaEditar() {
-  var nreg = V('ed-nreg');
-  if (!nreg) { alert('Ingrese un N° de Registro (ej: DD-0001)'); return; }
+function buscarParaEditar(){
+  var nreg=V('ed-nreg');if(!nreg){alert('Ingrese un N° de Registro (ej: DD-0001)');return;}
   spin(true);
-  jsonp(URL_SCRIPT, {action:'buscar_registro', nreg:encodeURIComponent(nreg)}, function(d) {
-    spin(false);
-    var area = E('edArea');
-    if (!d || d.status !== 'OK') {
-      area.style.display = 'block';
-      E('edAlert').innerHTML = '<div class="alert err">&#9888; ' + (d?d.msg:'Sin respuesta del servidor') + '</div>';
-      E('camposList').innerHTML = '';
-      return;
-    }
-    area.style.display = 'block';
-    E('edAlert').innerHTML = '<div class="alert ok">&#10003; Registro encontrado: ' + escHtml(nreg) + '</div>';
-    E('edTit').textContent = 'Registro ' + nreg;
-    E('edHoja').textContent = 'Hoja: ' + d.hoja + ' | Fila: ' + d.fila;
-
-    var datos = d.datos || [];
-    // Garantizar 115 posiciones aunque GAS retorne array truncado
-    while (datos.length < 115) { datos.push(''); }
-    var html = '';
-
-    SECCIONES_ED.forEach(function(sec) {
-      var secLabel = sec[0], c1 = sec[1], c2 = sec[2];
-      // Recopilar campos de esta sección que tengan nombre en FULL_H
-      var campos = [];
-      for (var col1 = c1; col1 <= c2; col1++) {
-        var i = col1 - 1; // 0-based index
-        var h = FULL_H[i];
-        if (!h) continue;
-        campos.push({h: h, i: i, col1: col1});
-      }
-      if (!campos.length) return;
-
-      // Encabezado de sección
-      html += '<div style="grid-column:1/-1;background:var(--n);color:#fff;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;margin-top:12px;letter-spacing:.4px">'
-        + secLabel + '</div>';
-
-      campos.forEach(function(f) {
-        var val = (datos[f.i] !== undefined && datos[f.i] !== null && String(datos[f.i]) !== 'null') ? String(datos[f.i]).trim() : '';
-        var prot = COLS_PROT.indexOf(f.col1) >= 0;
-        html += '<div class="det-fld">'
-          + '<div class="det-lbl">' + escHtml(f.h) + ' <span style="color:#9CA3AF;font-size:9px">col ' + f.col1 + '</span></div>'
-          + (prot
-            ? '<div class="det-val" style="color:#9CA3AF;background:#F1F5F9">' + escHtml(val||'—') + '</div>'
-            : '<div class="det-val editable" title="Clic para editar" onclick="openEditCampo(\''
-              + escJs(d.hoja) + '\',' + d.fila + ',' + f.col1 + ',\''
-              + escJs(f.h) + '\',\'' + escJs(val) + '\')">'
-              + escHtml(val||'—') + '</div>'
-          )
-          + '</div>';
-      });
-    });
-
-    E('camposList').innerHTML = '<div class="det-grid" style="align-items:start">' + html + '</div>';
+  jsonp(URL_SCRIPT,{action:'buscar_registro',nreg:encodeURIComponent(nreg)},function(d){
+    spin(false);var area=E('edArea');
+    if(!d||d.status!=='OK'){area.style.display='block';E('edAlert').innerHTML='<div class="alert err">⚠ '+(d?d.msg:'Sin respuesta del servidor')+'</div>';E('camposList').innerHTML='';return;}
+    area.style.display='block';E('edAlert').innerHTML='<div class="alert ok">✓ Registro encontrado: '+nreg+'</div>';
+    E('edTit').textContent='Registro '+nreg;E('edHoja').textContent='Hoja: '+d.hoja+' | Fila: '+d.fila;
+    if(E('btnPrintEd'))E('btnPrintEd').style.display='inline-block';
+    var html='<div class="det-grid">';var datos=d.datos||[];while(datos.length<115){datos.push('');}
+    FULL_H.forEach(function(h,i){if(!h)return;var val=datos[i]!==undefined?String(datos[i]):'';var prot=COLS_PROT.indexOf(i+1)>=0;var col1=i+1;
+      html+='<div class="det-fld"><div class="det-lbl">'+h+' <span style="color:#9CA3AF;font-size:9px">col '+col1+'</span></div>'+(prot?'<div class="det-val" style="color:#9CA3AF">'+escHtml(val||'—')+'</div>':'<div class="det-val editable" title="Clic para editar" onclick="openEditCampo(\''+d.hoja+'\','+d.fila+','+col1+',\''+escJs(h)+'\',\''+escJs(val)+'\')">'+escHtml(val||'—')+'</div>')+'</div>';});
+    html+='</div>';E('camposList').innerHTML=html;
   });
 }
-
-function abrirEditar(nreg) {
-  showTab('editar');
-  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('act'); });
-  document.querySelectorAll('.tab')[4].classList.add('act');
-  E('ed-nreg').value = nreg;
-  buscarParaEditar();
-  window.scrollTo({top:0,behavior:'smooth'});
+function abrirEditar(nreg){showTab('editar');document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('act');});document.querySelectorAll('.tab')[4].classList.add('act');E('ed-nreg').value=nreg;buscarParaEditar();window.scrollTo({top:0,behavior:'smooth'});}
+function openEditCampo(hoja,fila,col,header,valActual){
+  EDIT_DATA={hoja:hoja,fila:fila,col:col,header:header,valActual:valActual};
+  E('editCampoInfo').innerHTML='<strong>Campo:</strong> '+escHtml(header)+' &nbsp;|&nbsp; <strong>Columna:</strong> '+col+' &nbsp;|&nbsp; <strong>Hoja:</strong> '+escHtml(hoja)+', Fila '+fila;
+  E('editValActual').value=valActual;E('editClave').value='';E('editMsg').style.display='none';
+  var wrap=E('editInputWrap');
+  var opts=CAMPOS_SELECT[header];
+  if(opts){var s='<select id="editValNuevo" style="width:100%;padding:10px 14px;border:1.5px solid #CBD5E1;border-radius:9px;font-size:13px;font-family:inherit"><option value="">— Seleccione —</option>';opts.forEach(function(o){s+='<option value="'+escHtml(o)+'"'+(o===valActual?' selected':'')+'>'+escHtml(o)+'</option>';});s+='</select>';wrap.innerHTML='<label style="font-size:11px;font-weight:700;color:#6B7280">Nuevo valor <span style="color:#B71C1C">*</span></label>'+s;}
+  else if(CAMPOS_TEXTAREA.indexOf(header)>=0){wrap.innerHTML='<label style="font-size:11px;font-weight:700;color:#6B7280">Nuevo valor <span style="color:#B71C1C">*</span></label><textarea id="editValNuevo" style="width:100%;padding:10px 14px;border:1.5px solid #CBD5E1;border-radius:9px;font-size:13px;font-family:inherit;min-height:90px;resize:vertical">'+escHtml(valActual)+'</textarea>';}
+  else{wrap.innerHTML='<label style="font-size:11px;font-weight:700;color:#6B7280">Nuevo valor <span style="color:#B71C1C">*</span></label><input type="text" id="editValNuevo" value="'+escHtml(valActual)+'" style="width:100%;padding:10px 14px;border:1.5px solid #CBD5E1;border-radius:9px;font-size:13px;font-family:inherit" onkeydown="if(event.key===\'Enter\')doEditarCampo()">';}
+  E('ovEdit').classList.add('show');setTimeout(function(){var el=E('editValNuevo');if(el){el.focus();if(el.select)el.select();}},100);
 }
-
-// Campos que usan textarea (texto largo)
-var CAMPOS_TEXTAREA = [
-  'Dirección del Bien','Actos Seleccionados','Otro Acto','Dirección Domiciliaria',
-  'Actividad Económica','Empresa / Trabajo','Descripción Fondos','Respaldo Documental',
-  'Cónyuge Actividad','Cónyuge Dirección','BF Dirección','PJ Beneficiarios',
-  'Bases Consultadas','Factores Riesgo','Observaciones','FP Resumen'
-];
-// Campos con opciones predefinidas {nombre: [opciones]}
-var CAMPOS_SELECT = {
-  'Estado':             ['GUARDADO','PENDIENTE','ANULADO'],
-  'Tipo Interviniente': ['Vendedor','Comprador','Deudor Hipotecario','Acreedor Hipotecario','Donante','Donatario','Permutante','Comodatante','Comodatario','Cedente','Cesionario','Otro'],
-  'Estado Civil':       ['Soltero/a','Casado/a','Divorciado/a','Viudo/a','Unión de hecho'],
-  'Cónyuge Tipo ID':    ['Cédula','Pasaporte','RUC'],
-  'Tipo Identificación':['Cédula','Pasaporte','RUC'],
-  'Estado RUC':         ['Activo','Suspendido','Cancelado','No tiene'],
-  'Régimen Tributario': ['General','RIMPE-Emprendedor','RIMPE-Negocio Popular','No aplica'],
-  'Obligado Contabilidad':['Sí','No'],
-  'Contribuyente Especial':['Sí','No'],
-  'Actúa Cuenta Propia':['Sí','No'],
-  'Es PEP':             ['Sí','No'],
-  'PEP Familiar':       ['Sí','No'],
-  'Declaración Aceptada':['Sí','No'],
-  'Nivel Riesgo':       ['BAJO','MEDIO','ALTO','MUY ALTO'],
-  'Decisión':           ['Continuar operación','Continuar con alertas','No continuar operación','En investigación'],
-  'Origen de Fondos':   ['Ahorros propios','Crédito bancario','Venta de inmueble','Actividad comercial','Herencia','Donación','Salario / sueldo','Otro'],
-  'Tipo de Bien':       ['Inmueble urbano','Inmueble rural','Vehículo','Bien mueble','Otro']
-};
-
-function openEditCampo(hoja, fila, col, header, valActual) {
-  EDIT_DATA = {hoja:hoja, fila:fila, col:col, header:header, valActual:valActual};
-  E('editCampoInfo').innerHTML = '<strong>Campo:</strong> '+escHtml(header)+
-    ' &nbsp;|&nbsp; <strong>Columna:</strong> '+col+
-    ' &nbsp;|&nbsp; <strong>Hoja:</strong> '+escHtml(hoja)+', Fila '+fila;
-  E('editValActual').value = valActual;
-  E('editClave').value = '';
-  E('editMsg').style.display = 'none';
-
-  // Determinar tipo de input: select, textarea o input
-  var wrap = E('editInputWrap');
-  var opts = CAMPOS_SELECT[header];
-  if (opts) {
-    var selHtml = '<select id="editValNuevo" class="fld-edit" style="width:100%;padding:10px 14px;border:1.5px solid var(--b);border-radius:9px;font-size:13px;font-family:inherit">';
-    selHtml += '<option value="">— Seleccione —</option>';
-    opts.forEach(function(o){ selHtml += '<option value="'+escHtml(o)+'"'+(o===valActual?' selected':'')+'>'+escHtml(o)+'</option>'; });
-    selHtml += '</select>';
-    wrap.innerHTML = selHtml;
-  } else if (CAMPOS_TEXTAREA.indexOf(header) >= 0) {
-    wrap.innerHTML = '<textarea id="editValNuevo" style="width:100%;padding:10px 14px;border:1.5px solid var(--b);border-radius:9px;font-size:13px;font-family:inherit;min-height:90px;resize:vertical">'+escHtml(valActual)+'</textarea>';
-  } else {
-    wrap.innerHTML = '<input type="text" id="editValNuevo" value="'+escHtml(valActual)+'" placeholder="Ingrese el nuevo valor..." style="width:100%;padding:10px 14px;border:1.5px solid var(--b);border-radius:9px;font-size:13px;font-family:inherit" onkeydown="if(event.key===\'Enter\')doEditarCampo()">';
-  }
-
-  E('ovEdit').classList.add('show');
-  setTimeout(function(){
-    var el = E('editValNuevo');
-    if (el) { el.focus(); if (el.select) el.select(); }
-  }, 100);
-}
-
-function doEditarCampo() {
-  if (!EDIT_DATA) return;
-  var el = E('editValNuevo');
-  var nuevoVal = el ? el.value.trim() : '';
-  var clave = V('editClave');
-  if (!clave) { showEditMsg('Ingrese la clave de administrador', false); return; }
-  if (nuevoVal === EDIT_DATA.valActual) { showEditMsg('El valor no cambió', false); return; }
-
-  var m = E('editMsg');
-  m.style.display='block'; m.style.background='#EDE9FE'; m.style.color='#5B21B6';
-  m.textContent = 'Guardando...';
-
-  var p = {action:'editar_campo',
-    hoja:encodeURIComponent(EDIT_DATA.hoja),
-    fila:EDIT_DATA.fila, col:EDIT_DATA.col,
-    valor:encodeURIComponent(nuevoVal),
-    clave:encodeURIComponent(clave)};
-
-  jsonp(URL_SCRIPT, p, function(d) {
-    if (d && d.status === 'OK') {
-      showEditMsg('✓ Campo actualizado correctamente', true);
-      setTimeout(function() {
-        closeEdit();
-        buscarParaEditar(); // Recargar el registro
-      }, 1200);
-    } else {
-      showEditMsg('✗ ' + (d?d.msg:'Error al guardar'), false);
-    }
+function doEditarCampo(){
+  if(!EDIT_DATA)return;var el=E('editValNuevo');var nuevoVal=el?el.value.trim():'';var clave=V('editClave');
+  if(!clave){showEditMsg('Ingrese la clave de administrador',false);return;}
+  if(nuevoVal===EDIT_DATA.valActual){showEditMsg('El valor no cambió',false);return;}
+  var m=E('editMsg');m.style.display='block';m.style.background='#EDE9FE';m.style.color='#5B21B6';m.textContent='Guardando...';
+  jsonp(URL_SCRIPT,{action:'editar_campo',hoja:encodeURIComponent(EDIT_DATA.hoja),fila:EDIT_DATA.fila,col:EDIT_DATA.col,valor:encodeURIComponent(nuevoVal),clave:encodeURIComponent(clave)},function(d){
+    if(d&&d.status==='OK'){showEditMsg('✓ Campo actualizado correctamente',true);setTimeout(function(){closeEdit();buscarParaEditar();},1200);}
+    else{showEditMsg('✗ '+(d?d.msg:'Error al guardar'),false);}
   });
 }
+function showEditMsg(msg,ok){var m=E('editMsg');m.style.display='block';m.style.background=ok?'#D1FAE5':'#FEE2E2';m.style.color=ok?'#065F46':'#7F1D1D';m.style.padding='8px 12px';m.style.borderRadius='7px';m.style.fontSize='12px';m.textContent=msg;}
+function closeEdit(){E('ovEdit').classList.remove('show');EDIT_DATA=null;}
 
-function showEditMsg(msg, ok) {
-  var m = E('editMsg');
-  m.style.display='block';
-  m.style.background = ok ? '#D1FAE5' : '#FEE2E2';
-  m.style.color = ok ? '#065F46' : '#7F1D1D';
-  m.style.padding = '8px 12px'; m.style.borderRadius = '7px'; m.style.fontSize = '12px';
-  m.textContent = msg;
+function fmtNum(n){var f=parseFloat(n);if(isNaN(f))return'0.00';return f.toLocaleString('es-EC',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtFecha(s){if(!s)return'—';var d=new Date(s);if(isNaN(d))return String(s).substring(0,10);return d.toLocaleDateString('es-EC',{day:'2-digit',month:'2-digit',year:'numeric'});}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function escJs(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"');}
+function spin(show){E('spinOv').className=show?'spin-ov show':'spin-ov';}
+function renderPag(containerId,pg,total,fnName){
+  var cont=E(containerId);if(!cont)return;if(total<=1){cont.innerHTML='';return;}
+  var html='<button class="pag-btn" onclick="'+fnName+'('+(pg-1)+')" '+(pg<=1?'disabled':'')+'>&laquo; Anterior</button>';
+  var start=Math.max(1,pg-2),end=Math.min(total,pg+2);
+  for(var i=start;i<=end;i++)html+='<button class="pag-btn'+(i===pg?' act':'')+'" onclick="'+fnName+'('+i+')">'+i+'</button>';
+  html+='<button class="pag-btn" onclick="'+fnName+'('+(pg+1)+')" '+(pg>=total?'disabled':'')+'">Siguiente &raquo;</button>';
+  html+='<span style="font-size:11px;color:#9CA3AF;margin-left:8px">Pág. '+pg+' de '+total+'</span>';
+  cont.innerHTML=html;
 }
-function closeEdit() { E('ovEdit').classList.remove('show'); EDIT_DATA=null; }
-
-// ════ HELPERS ══════════════════════════════════════════════════════════════
-function badgeRiesgo(nivel) {
-  var cls = {'MUY ALTO':'r','ALTO':'a','MEDIO':'a','BAJO':'g'}[nivel] || 'b';
-  return nivel ? '<span class="badge '+cls+'">'+nivel+'</span>' : '—';
-}
-function fmtNum(n) {
-  var f = parseFloat(n); if (isNaN(f)) return '0.00';
-  return f.toLocaleString('es-EC',{minimumFractionDigits:2,maximumFractionDigits:2});
-}
-function fmtFecha(s) {
-  if (!s) return '—';
-  var d = new Date(s); if (isNaN(d)) return String(s).substring(0,10);
-  return d.toLocaleDateString('es-EC',{day:'2-digit',month:'2-digit',year:'numeric'});
-}
-function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function escJs(s) { return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"'); }
-function clearFiltros(pre) {
-  ['anio','desde','hasta','busq'].forEach(function(f){var e=E(pre+'-'+f);if(e)e.value='';});
-}
-function spin(show) { E('spinOv').className = show ? 'spin-ov show' : 'spin-ov'; }
-
-function renderPag(containerId, pg, total, fnName) {
-  var cont = E(containerId); if (!cont) return;
-  if (total <= 1) { cont.innerHTML=''; return; }
-  var html = '<button class="pag-btn" onclick="'+fnName+'('+(pg-1)+')" '+(pg<=1?'disabled':'')+'>&laquo; Anterior</button>';
-  var start = Math.max(1,pg-2), end = Math.min(total,pg+2);
-  for (var i=start;i<=end;i++) html+='<button class="pag-btn'+(i===pg?' act':'')+'" onclick="'+fnName+'('+i+')">'+i+'</button>';
-  html += '<button class="pag-btn" onclick="'+fnName+'('+(pg+1)+')" '+(pg>=total?'disabled':'')+'">Siguiente &raquo;</button>';
-  html += '<span style="font-size:11px;color:#9CA3AF;margin-left:8px">Pág. '+pg+' de '+total+'</span>';
-  cont.innerHTML = html;
-}
-
-// ════ JSONP ════════════════════════════════════════════════════════════════
-function jsonp(url, params, cb) {
-  var cbn = '__jp' + Date.now();
-  var sc = document.createElement('script');
-  var tm = setTimeout(function() {
-    delete window[cbn]; try{ document.head.removeChild(sc); }catch(x){}
-    cb({status:'ERROR',msg:'Timeout'});
-  }, 30000);
-  window[cbn] = function(data) {
-    clearTimeout(tm); delete window[cbn];
-    try{ document.head.removeChild(sc); }catch(x){}
-    cb(data);
-  };
-  sc.onerror = function() {
-    clearTimeout(tm); delete window[cbn];
-    try{ document.head.removeChild(sc); }catch(x){}
-    cb({status:'ERROR',msg:'Error de red'});
-  };
-  var qs = Object.keys(params).map(function(k){ return k+'='+params[k]; }).join('&');
-  sc.src = url + '?' + qs + '&callback=' + cbn + '&t=' + Date.now();
+function jsonp(url,params,cb){
+  var cbn='__jp'+Date.now();var sc=document.createElement('script');
+  var tm=setTimeout(function(){delete window[cbn];try{document.head.removeChild(sc);}catch(x){}cb({status:'ERROR',msg:'Timeout'});},30000);
+  window[cbn]=function(data){clearTimeout(tm);delete window[cbn];try{document.head.removeChild(sc);}catch(x){}cb(data);};
+  sc.onerror=function(){clearTimeout(tm);delete window[cbn];try{document.head.removeChild(sc);}catch(x){}cb({status:'ERROR',msg:'Error de red'});};
+  var qs=Object.keys(params).map(function(k){return k+'='+params[k];}).join('&');
+  sc.src=url+'?'+qs+'&callback='+cbn+'&t='+Date.now();
   document.head.appendChild(sc);
 }
-
-// ════ INIT ═════════════════════════════════════════════════════════════════
-window.addEventListener('DOMContentLoaded', function() {
-  var saved = localStorage.getItem('dd_admin_url');
-  if (saved) E('lUrl').value = saved;
-});
-
 function exportarExcel(){
   if(!DATOS_EXPORT||!DATOS_EXPORT.length){alert('Sin datos');return;}
-  var H=['N° Registro','Fecha Ingreso','Matrizador','Notaría','Año','Estado','N° Matriz','Tipo Interviniente','Fecha Operación','Cuantía USD','Avaluó USD','FP Resumen','Total Pago USD','Entidad Financiera','N° Cuenta','Tipo Cuenta','FP Valor Debitado','FP Valor Crédito','FP Valor Efectivo','FP Cheque','FP Valor Bienes','FP Valor Servicios','FP Tarjeta Crédito','Tipo de Bien','Dirección del Bien','Estado del Bien','Actos Seleccionados','Otro Acto','','','','','','','','','','','','','','','','','','','','Tipo Identificación','Cédula / Pasaporte','Nombres Completos','RUC','Nacionalidad','Estado Civil','Profesión','Actividad Económica','Dirección Domiciliaria','Ciudad / Provincia','Teléfono','Correo','Empresa / Trabajo','Tiempo Actividad','Cónyuge Tipo ID','Cónyuge Cédula','Cónyuge Nombres','Cónyuge RUC','Cónyuge Nacionalidad','Cónyuge Profesión','Cónyuge Actividad','Cónyuge Dirección','Cónyuge Teléfono','Cónyuge Correo','Cónyuge Empresa','Estado RUC','Régimen Tributario','Obligado Contabilidad','Contribuyente Especial','Fecha Verificación SRI','Resultado SRI','Ingreso Mensual USD','Patrimonio USD','Origen de Fondos','Descripción Fondos','Respaldo Documental','Actúa Cuenta Propia','BF Nombres','BF Cédula','BF Nacionalidad','BF Dirección','BF Teléfono','BF Correo','BF Relación','PJ Razón Social','PJ RUC','PJ Representante','PJ CI Representante','PJ Estructura Compleja','PJ Beneficiarios','Bases Consultadas','Fecha Consulta Bases','Es PEP','PEP Familiar','PEP Entidad','PEP Cargo','PEP Período','Declaración Aceptada','Nombre Compareciente','Fecha Firma','Funcionario Diligencia','Fecha Diligencia','Factores Riesgo','Otro Factor','Nivel Riesgo','Decisión','Observaciones','Fecha Registro'];
+  var H=['N° Registro','Fecha Ingreso','Matrizador','Notaría','Año','Estado','N° Matriz','Tipo Interviniente','Fecha Operación','Cuantía USD','Avaluó USD','FP Resumen','Total Pago USD','Entidad Financiera','N° Cuenta','Tipo Cuenta','FP Valor Debitado','FP Valor Crédito','FP Valor Efectivo','FP Cheque','FP Valor Bienes','FP Valor Servicios','FP Tarjeta Crédito','Tipo de Bien','Dirección del Bien','Moneda','Actos Seleccionados','Otro Acto','Tipo Identificación','Cédula / Pasaporte','Nombres Completos','RUC','Nacionalidad','Estado Civil','Profesión','Actividad Económica','Dirección Domiciliaria','Ciudad / Provincia','Teléfono','Correo','Empresa / Trabajo','Tiempo Actividad','Cónyuge Tipo ID','Cónyuge Cédula','Cónyuge Nombres','Cónyuge RUC','Cónyuge Nacionalidad','Cónyuge Profesión','Cónyuge Actividad','Cónyuge Dirección','Cónyuge Teléfono','Cónyuge Correo','Cónyuge Empresa','Estado RUC','Régimen Tributario','Obligado Contabilidad','Contribuyente Especial','Fecha Verificación SRI','Resultado SRI','Ingreso Mensual USD','Patrimonio USD','Origen de Fondos','Descripción Fondos','Respaldo Documental','Actúa Cuenta Propia','BF Nombres','BF Cédula','BF Nacionalidad','BF Dirección','BF Teléfono','BF Correo','BF Relación','PJ Razón Social','PJ RUC','PJ Representante','PJ CI Representante','PJ Estructura Compleja','PJ Beneficiarios','Bases Consultadas','Fecha Consulta Bases','Es PEP','PEP Familiar','PEP Entidad','PEP Cargo','PEP Período','Declaración Aceptada','Nombre Compareciente','Fecha Firma','Funcionario Diligencia','Fecha Diligencia','Factores Riesgo','Otro Factor','Nivel Riesgo','Decisión','Observaciones','Fecha Registro'];
   var rows=[H];
-  DATOS_EXPORT.forEach(function(r){rows.push([(r.nreg||''),fmtF(r.fecha),(r.mat||''),(r.notaria||''),(r.anio||''),(r.estado||''),(r.nmat||''),(r.tipo_int||''),fmtF(r.fecha_op),(r.cuantia||''),(r.avaluo||''),(r.fp_resumen||''),(r.total||''),(r.entidad||''),(r.nro_cta||''),(r.tipo_cta||''),(r.fp_debito||''),(r.fp_credito||''),(r.fp_efectivo||''),(r.fp_cheque||''),(r.fp_bienes||''),(r.fp_servicios||''),(r.fp_tarjeta||''),(r.tipo_bien||''),(r.dir_bien||''),(r.moneda||''),(r.actos||''),(r.otro_acto||''),'','','','','','','','','','','','','','','','','','','',(r.tipo_id||''),(r.cedula||''),(r.nombres||''),(r.ruc||''),(r.nacion||''),(r.ecivil||''),(r.profesion||''),(r.actividad||''),(r.direccion||''),(r.ciudad||''),(r.telefono||''),(r.correo||''),(r.empresa||''),(r.tact||''),(r.c_tipo_id||''),(r.c_cedula||''),(r.c_nombres||''),(r.c_ruc||''),(r.c_nacion||''),(r.c_prof||''),(r.c_act||''),(r.c_dir||''),(r.c_tel||''),(r.c_correo||''),(r.c_empresa||''),(r.eruc||''),(r.regimen||''),(r.oblig||''),(r.contrib||''),fmtF(r.fsri),(r.rsri||''),(r.ingreso||''),(r.patrimonio||''),(r.ofondos||''),(r.odetalle||''),(r.respaldo||''),(r.cpropia||''),(r.bf_nom||''),(r.bf_ced||''),(r.bf_nac||''),(r.bf_dir||''),(r.bf_tel||''),(r.bf_correo||''),(r.bf_rel||''),(r.pj_razon||''),(r.pj_ruc||''),(r.pj_rep||''),(r.pj_ci||''),(r.pj_estr||''),(r.pj_ben||''),(r.bases||''),fmtF(r.fbases),(r.espep||''),(r.pepfam||''),(r.pepent||''),(r.pepcargo||''),(r.pepperiodo||''),(r.dacept||''),(r.ncomp||''),fmtF(r.ffirma),(r.func_dilig||''),fmtF(r.fdilig),(r.factores||''),(r.otro_factor||''),(r.riesgo||''),(r.decision||''),(r.obs||''),fmtF(r.fecha_reg)]);});
+  DATOS_EXPORT.forEach(function(r){rows.push([(r.nreg||''),fmtF(r.fecha),(r.mat||''),(r.notaria||''),(r.anio||''),(r.estado||''),(r.nmat||''),(r.tipo_int||''),fmtF(r.fecha_op),(r.cuantia||''),(r.avaluo||''),(r.fp_resumen||''),(r.total||''),(r.entidad||''),(r.nro_cta||''),(r.tipo_cta||''),(r.fp_debito||''),(r.fp_credito||''),(r.fp_efectivo||''),(r.fp_cheque||''),(r.fp_bienes||''),(r.fp_servicios||''),(r.fp_tarjeta||''),(r.tipo_bien||''),(r.dir_bien||''),(r.moneda||''),(r.actos||''),(r.otro_acto||''),(r.tipo_id||''),(r.cedula||''),(r.nombres||''),(r.ruc||''),(r.nacion||''),(r.ecivil||''),(r.profesion||''),(r.actividad||''),(r.direccion||''),(r.ciudad||''),(r.telefono||''),(r.correo||''),(r.empresa||''),(r.tact||''),(r.c_tipo_id||''),(r.c_cedula||''),(r.c_nombres||''),(r.c_ruc||''),(r.c_nacion||''),(r.c_prof||''),(r.c_act||''),(r.c_dir||''),(r.c_tel||''),(r.c_correo||''),(r.c_empresa||''),(r.eruc||''),(r.regimen||''),(r.oblig||''),(r.contrib||''),fmtF(r.fsri),(r.rsri||''),(r.ingreso||''),(r.patrimonio||''),(r.ofondos||''),(r.odetalle||''),(r.respaldo||''),(r.cpropia||''),(r.bf_nom||''),(r.bf_ced||''),(r.bf_nac||''),(r.bf_dir||''),(r.bf_tel||''),(r.bf_correo||''),(r.bf_rel||''),(r.pj_razon||''),(r.pj_ruc||''),(r.pj_rep||''),(r.pj_ci||''),(r.pj_estr||''),(r.pj_ben||''),(r.bases||''),fmtF(r.fbases),(r.espep||''),(r.pepfam||''),(r.pepent||''),(r.pepcargo||''),(r.pepperiodo||''),(r.dacept||''),(r.ncomp||''),fmtF(r.ffirma),(r.func_dilig||''),fmtF(r.fdilig),(r.factores||''),(r.otro_factor||''),(r.riesgo||''),(r.decision||''),(r.obs||''),fmtF(r.fecha_reg)]);});
   var csv=rows.map(function(row){return row.map(function(c){var s=String(c===null||c===undefined?'':c).replace(/"/g,'""');return(s.indexOf(';')>=0||s.indexOf('"')>=0)?'"'+s+'"':s;}).join(';');}).join('\r\n');
   var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download='DebidaDiligencia_'+new Date().toISOString().slice(0,10)+'.csv';
   document.body.appendChild(a);a.click();document.body.removeChild(a);
-}</script>
+}
+function imprimirRegistroEditado(){
+  var nreg=V('ed-nreg');var hojaEl=E('edHoja');var hoja=hojaEl?hojaEl.textContent:'';
+  var campos=[];
+  document.querySelectorAll('#camposList .det-fld').forEach(function(f){
+    var lbl=f.querySelector('.det-lbl');var val=f.querySelector('.det-val');
+    if(lbl&&val){var l=lbl.textContent.replace(/col \d+/,'').trim();var v=val.textContent.trim();if(v&&v!=='—'&&v!=='-')campos.push({l:l,v:v});}
+  });
+  var rows='';campos.forEach(function(c){rows+='<div class="fld"><div class="lbl">'+c.l+'</div><div class="val">'+c.v+'</div></div>';});
+  var html='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Registro '+nreg+'</title><style>body{font-family:Arial,sans-serif;font-size:11px;color:#1a1a2e;margin:20px}h1{font-size:13px;color:#1B3A6B;margin-bottom:3px}h2{font-size:10px;color:#6B7280;font-weight:400;margin-bottom:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 18px}.fld{border-bottom:1px solid #e2e8f0;padding:4px 0}.lbl{font-size:9px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.4px}.val{font-size:11px;color:#1a1a2e}.footer{margin-top:18px;border-top:1px solid #e2e8f0;padding-top:6px;font-size:9px;color:#9CA3AF;text-align:center}@media print{body{margin:8px}}</style></head><body><h1>&#128203; FORMULARIO DE DEBIDA DILIGENCIA \u2014 Notar\u00EDa Sexag\u00E9sima Novena del Cant\u00F3n Quito</h1><h2>'+hoja+' &nbsp;|&nbsp; Generado: '+new Date().toLocaleString("es-EC")+'</h2><div class="grid">'+rows+'</div><div class="footer">Notar\u00EDa Sexag\u00E9sima Novena del Cant\u00F3n Quito &middot; 2026 &middot; Debida Diligencia</div><scr'+'ipt>window.onload=function(){window.print();}<\/scr'+'ipt></body></html>';
+  var w=window.open('','_blank','width=920,height=720');if(w){w.document.write(html);w.document.close();}else{alert('Active las ventanas emergentes en su navegador para imprimir.');}
+}
+window.addEventListener('DOMContentLoaded',function(){aplicarPeriodo('anio_actual');});
+</script>
 </body>
 </html>
