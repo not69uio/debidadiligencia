@@ -589,7 +589,30 @@ textarea{resize:vertical;min-height:54px}
     <button class="btn bo" onclick="openHist()">&#128203; Historial / Editar</button>
     <button class="btn bo" onclick="doNew()">&#8635; Nuevo</button>
     <button class="btn bp" id="bsv" onclick="doSave()" disabled>&#128190; Guardar</button>
+    <button class="btn bs" onclick="openReprint()" style="background:#1565C0">&#128260; Reimprimir</button>
 
+  </div>
+</div>
+
+<!-- MODAL REIMPRIMIR -->
+<div class="ov" id="ovReprint">
+  <div class="md" style="max-width:480px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h3 style="margin:0;color:#1B3A6B">&#128260; Reimprimir Formulario</h3>
+      <button onclick="closeReprint()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#888">&#x2715;</button>
+    </div>
+    <p style="font-size:11px;color:#555;margin-bottom:12px;line-height:1.6">
+      Ingrese el N&deg; de registro para reimprimir el formulario ya guardado.<br>
+      <strong>Solo puede reimprimir formularios del funcionario activo.</strong>
+    </p>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input type="text" id="rpNro" placeholder="Ej: DD-0042" maxlength="10"
+        style="flex:1;text-transform:uppercase;font-family:monospace;font-size:13px;font-weight:700"
+        oninput="this.value=this.value.toUpperCase()"
+        onkeydown="if(event.key==='Enter')doReprintSearch()">
+      <button class="btn bs" onclick="doReprintSearch()" style="background:#1565C0;white-space:nowrap">&#128269; Buscar</button>
+    </div>
+    <div id="rpRes" style="min-height:40px;font-size:11px"></div>
   </div>
 </div>
 
@@ -639,7 +662,7 @@ textarea{resize:vertical;min-height:54px}
       <label class="cl">&#128197; A&ntilde;o del formulario <span id="anioLk" class="lbdg" style="display:none">&#128274; Fijo</span></label>
       <input type="text" id="cfAnio" class="ci" placeholder="2026" style="max-width:120px">
       <label class="cl">&#128279; URL del Apps Script (/exec) <span class="req">*</span> <span id="urlLk" class="lbdg" style="display:none">&#128274; Fijo</span></label>
-      <input type="text" id="cfUrl" class="ci" placeholder="https://script.google.com/macros/s/.../exec" style="font-family:monospace;font-size:10px">
+      <input type="password" id="cfUrl" class="ci" placeholder="https://script.google.com/macros/s/.../exec" style="font-family:monospace;font-size:10px" autocomplete="off">
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
         <button onclick="testConn()" class="btn bo" style="font-size:11px;padding:5px 13px">&#128299; Probar</button>
         <span id="connRes" style="font-size:10px"></span>
@@ -680,10 +703,10 @@ var FP_NAMES = ['Valor debitado','Valor crédito','Valor efectivo','Cheque','Val
 var CFG = {};
 function loadCfg() {
   try { CFG = JSON.parse(localStorage.getItem('dd_cfg') || '{}'); } catch(e) { CFG = {}; }
-  if (!CFG.scriptUrl) CFG.scriptUrl = (function(){var _$=['aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNy','b3Mvcy9BS2Z5Y2J4T29jeVhrSm85T1dVcWpNbW16TmtsOVRXTHlQS2xmakNsUzlfQTA=','bnB5SEZNVmJ0ZUJvYUF6UFBlRjV1T1U1WHMwVEEvZXhlYw=='];return atob(_$[0])+atob(_$[1])+atob(_$[2]);})() ;
+  if (!CFG.scriptUrl) CFG.scriptUrl = (function(){var _$=['aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2','Z5Y2J4SXRhQnlUM21QZEp2Wl8zYU92X2cxT1BqWjhkUjZMMzQ4','dVR4V2Uyb0RVOEhycWVjNFRDSjczY2ppSkp0TWh5R2dSZy9leGVj'];return atob(_$[0])+atob(_$[1])+atob(_$[2]);})();
   if (!CFG.pass)      CFG.pass      = ADMIN_DEF;
   if (!CFG.anio)      CFG.anio      = '2026';
-  if (!CFG.nombre)    CFG.nombre    = decodeURIComponent(escape(atob('Tm90YXLDrWEgU2V4YWfDqXNpbWEgbm92ZW5hIGRlIFF1aXRv')));
+  if (!CFG.nombre)    CFG.nombre    = atob('Tk9UQVLNQSBTRVhBR8lTSU1BIFNFR1VOREEgREVMIENBTlTTTiBRVUlUTw==');
   if (!CFG.mat)       CFG.mat       = ['Funcionario 1','Funcionario 2','Funcionario 3'];
   if (!CFG.tipoActos) CFG.tipoActos = [
     '73 - Promesas de celebrar contratos',
@@ -714,6 +737,7 @@ loadCfg();
 
 // ── STATE ───────────────────────────────────────────────────
 var FUNC = '', RIESGO = '', HIST = [], EDIT = null, EDITROW = -1, EDITIDX = -1;
+var SAVE_TS = 0; // v3: timestamp del ultimo guardado exitoso (cooldown antiduplic)
 try { HIST = JSON.parse(localStorage.getItem('dd_hist') || '[]'); } catch(e) {}
 
 // ── DOM HELPERS ─────────────────────────────────────────────
@@ -1112,11 +1136,34 @@ function validate() {
 function doSave() {
   var errs = validate();
   if (errs.length) { showAlert('\u26A0\uFE0F', 'Campos requeridos', '\u2022 ' + errs.join('\n\u2022 '), false); return; }
+  // v3: cooldown 8s anti-doble-clic
+  var ahora = Date.now();
+  if (ahora - SAVE_TS < 8000) {
+    showAlert('\u23F3', 'Espere un momento',
+      'El formulario anterior se acaba de guardar.\nEspere unos segundos antes de guardar uno nuevo.', false);
+    return;
+  }
   E('bsv').disabled = true; E('bsv').textContent = 'Guardando...';
   E('sp').textContent = 'Enviando'; E('sp').className = 'spin';
   var datos = collectData();
   var action = (EDITROW > 0 && EDIT) ? 'editar' : 'guardar';
   var xp = action === 'editar' ? '&fila=' + EDITROW : '';
+  // v2: verificar duplicado cedula+matriz antes de guardar
+  if (action === 'guardar' && CFG.scriptUrl && datos[48] && datos[6]) {
+    jsonp(CFG.scriptUrl, {action:'verificar_duplicado',
+      cedula: encodeURIComponent(datos[48]),
+      nmat:   encodeURIComponent(datos[6])
+    }, function(chk) {
+      if (chk && chk.duplicado) {
+        E('bsv').disabled = false; E('bsv').textContent = '\uD83D\uDCBE Guardar';
+        E('sp').textContent = 'Error'; E('sp').className = 'err';
+        showAlert('\u26A0\uFE0F', 'Registro duplicado',
+          'Ya existe un registro con la c\u00E9dula ' + datos[48] +
+          ' para la Matriz N\u00B0 ' + datos[6] + '.\nNo se guard\u00F3 el formulario.', false);
+      } else { enviar(); }
+    });
+    return;
+  }
   var intentos = 0;
   function enviar() {
     intentos++;
@@ -1135,6 +1182,8 @@ function doSave() {
     E('sp').textContent = '\u2713 Conectado'; E('sp').className = 'ok';
     E('bsv').textContent = '\uD83D\uDCBE Guardar'; E('bsv').disabled = false;
     EDIT = null; EDITROW = -1; EDITIDX = -1;
+    SAVE_TS = Date.now(); // v3: marcar timestamp de guardado exitoso
+    if (d.nro) datos[0] = d.nro; // v4: guardar DD-XXXX asignado por servidor en datos[0]
     showSaveModal(datos[6], datos[48], datos[12]);
   }
   function onErr(msg) {
@@ -1302,7 +1351,8 @@ function checkPass() {
   if (E('adPw').value === CFG.pass) {
     E('adLogin').style.display = 'none'; E('adPanel').style.display = 'block';
     E('cfNom').value = CFG.nombre || ''; E('cfAnio').value = CFG.anio || '';
-    E('cfUrl').value = CFG.scriptUrl || ''; E('cfPw').value = '';
+    E('cfUrl').value = CFG.scriptUrl ? '********************************' : '';
+    E('cfPw').value = '';
     E('cfMat').value = (CFG.mat || []).join('\n');
     var cfActEl = E('cfAct');
     if (cfActEl) cfActEl.value = (CFG.tipoActos || []).join('\n');
@@ -1315,7 +1365,9 @@ function checkPass() {
   } else { E('adErr').style.display = 'block'; E('adPw').focus(); }
 }
 function testConn() {
-  var url = E('cfUrl').value.trim(), res = E('connRes');
+  var res = E('connRes');
+  var urlCampo = E('cfUrl').value.trim();
+  var url = (urlCampo && urlCampo.indexOf('*') < 0) ? urlCampo : CFG.scriptUrl;
   if (!url) { res.textContent = '\u26A0 Ingrese URL primero'; res.style.color = '#E65100'; return; }
   res.textContent = 'Probando...'; res.style.color = '#555';
   jsonp(url, {action:'ping'}, function(d) {
@@ -1327,7 +1379,10 @@ function saveCfg() {
   var np = E('cfPw').value.trim();
   if (!CFG._nomL)  { CFG.nombre    = E('cfNom').value.trim();  if (CFG.nombre)    CFG._nomL  = true; }
   if (!CFG._anioL) { CFG.anio      = E('cfAnio').value.trim(); if (CFG.anio)      CFG._anioL = true; }
-  if (!CFG._urlL)  { CFG.scriptUrl = E('cfUrl').value.trim();  if (CFG.scriptUrl) CFG._urlL  = true; }
+  if (!CFG._urlL) {
+    var urlNueva = E('cfUrl').value.trim();
+    if (urlNueva && urlNueva.indexOf('*') < 0) { CFG.scriptUrl = urlNueva; if (CFG.scriptUrl) CFG._urlL = true; }
+  }
   if (np) CFG.pass = np;
   CFG.mat = E('cfMat').value.split('\n').map(function(s) { return s.trim(); }).filter(Boolean);
   var cfAct = E('cfAct');
@@ -1358,8 +1413,7 @@ function doPing() {
 }
 
 // ── PRINT A4 ─────────────────────────────────────────────────
-function doPrint() {
-  var d = collectData();
+function doPrintDatos(d) {
   var nom = d[3] || CFG.nombre || 'Instituci\u00F3n';
   var anio = d[4] || CFG.anio || '';
   var hoy = new Date().toLocaleDateString('es-EC', {day:'2-digit', month:'2-digit', year:'numeric'});
@@ -1475,8 +1529,15 @@ function doPrint() {
   E('pd').innerHTML = '<div class="pw">' +
     '<div class="phd"><div><h1>FORMULARIO DEBIDA DILIGENCIA \u2014 ' + nom.toUpperCase() + '</h1>' +
     '<p>Prevenci\u00F3n de Lavado de Activos \u00B7 ' + anio + '</p></div>' +
-    '<div class="pr">N\u00B0 Matriz: <strong>' + (d[6]||'\u2014') + '</strong><br>Generado: ' + hoy + '</div></div>' +
+    (d[0] ? '<div style="display:flex;align-items:center;justify-content:center;flex-direction:column">' +
+      '<div style="font-size:7pt;opacity:.7;letter-spacing:.5px;text-transform:uppercase">N\u00B0 Registro</div>' +
+      '<div style="font-size:14pt;font-weight:900;letter-spacing:1px;color:#7FFFCF;line-height:1.2">' + d[0] + '</div>' +
+    '</div>' : '<div></div>') +
+    '<div class="pr">' +
+      'N\u00B0 Matriz: <strong>' + (d[6]||'\u2014') + '</strong><br>Generado: ' + hoy +
+    '</div></div>' +
     '<div class="pmeta">' +
+    '<div class="pmi"><div class="pml">N\u00B0 Registro</div><div class="pmv" style="font-weight:800;color:#1B3A6B">' + (d[0]||'\u2014') + '</div></div>' +
     '<div class="pmi"><div class="pml">Funcionario</div><div class="pmv">' + (d[2]||'\u2014') + '</div></div>' +
     '<div class="pmi"><div class="pml">Fecha</div><div class="pmv">' + hoy + '</div></div>' +
     '<div class="pmi"><div class="pml">N\u00B0 Matriz</div><div class="pmv">' + (d[6]||'\u2014') + '</div></div>' +
@@ -1541,9 +1602,34 @@ function showSaveModal(nroMat, cliente, totalPago) {
 function closeSaveModal(limpiarTodo) {
   var ov = E('ovSaveModal'); if (ov) ov.classList.remove('show');
   if (limpiarTodo) {
-    doNew(); // Limpia todo el formulario
+    doNew();
   } else {
-    resetSoloInterviniente(); // Solo limpia datos del interviniente
+    // v2: confirmar antes de imprimir y preparar nuevo interviniente
+    var nom = (E('nombres') && E('nombres').value.trim()) || 'el interviniente';
+    var conf = document.createElement('div');
+    conf.className = 'ov'; conf.id = 'ovConfInt'; conf.style.zIndex = '999';
+    conf.innerHTML =
+      '<div class="md" style="max-width:420px;text-align:center">' +
+        '<div style="font-size:40px;margin-bottom:10px">\uD83D\uDDA8</div>' +
+        '<h3 style="color:#1B3A6B;margin-bottom:10px">Imprimir y preparar nuevo interviniente</h3>' +
+        '<p style="font-size:12px;color:#374151;margin-bottom:16px;line-height:1.6">' +
+          'Se imprimir\u00E1 el formulario de <strong>' + nom + '</strong> ya guardado.<br><br>' +
+          'Despu\u00E9s quedar\u00E1 listo para ingresar el siguiente interviniente ' +
+          'manteniendo la Matriz, bien y formas de pago.' +
+        '</p>' +
+        '<div style="display:flex;gap:10px;justify-content:center">' +
+          '<button class="btn bo" onclick="' +
+            'document.body.removeChild(document.getElementById(\'ovConfInt\'))">' +
+            'Cancelar</button>' +
+          '<button class="btn bp" style="padding:10px 18px" onclick="' +
+            'document.body.removeChild(document.getElementById(\'ovConfInt\'));' +
+            'doPrint();' +
+            'setTimeout(function(){resetSoloInterviniente();},400)">' +
+            '\uD83D\uDDA8 Imprimir y continuar</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(conf);
+    conf.classList.add('show');
   }
 }
 
@@ -1551,6 +1637,67 @@ function closeSaveModalAndPrint() {
   var ov = E('ovSaveModal'); if (ov) ov.classList.remove('show');
   doPrint();
 }
+
+// v4: apertura del modal de reimprimir
+function openReprint() {
+  if (!FUNC) { showAlert('\u26A0\uFE0F','Funcionario requerido','Seleccione un funcionario antes de reimprimir.',false); return; }
+  if (!CFG.scriptUrl) { showAlert('\u26A0\uFE0F','Sin conexi\u00F3n','Configure la URL del script primero.',false); return; }
+  var inp = E('rpNro'); if (inp) inp.value = '';
+  var res = E('rpRes'); if (res) res.innerHTML = '';
+  E('ovReprint').classList.add('show');
+}
+function closeReprint() { E('ovReprint').classList.remove('show'); }
+
+function doReprintSearch() {
+  var nro = (E('rpNro') ? E('rpNro').value.trim().toUpperCase() : '');
+  if (!nro || !/^DD-\d{4}$/.test(nro)) {
+    E('rpRes').innerHTML = '<div style="color:#B71C1C;font-size:11px">&#9888; Formato inv\u00E1lido. Use DD-0001</div>';
+    return;
+  }
+  E('rpRes').innerHTML = '<div style="color:#555;font-size:11px">&#128269; Buscando ' + nro + '...</div>';
+  jsonp(CFG.scriptUrl, {action:'buscar_registro', nreg: encodeURIComponent(nro)}, function(r) {
+    if (!r || r.status !== 'OK') {
+      E('rpRes').innerHTML = '<div style="color:#B71C1C;font-size:11px">&#10060; No se encontr\u00F3 el registro ' + nro + '.</div>';
+      return;
+    }
+    var datos = r.datos;
+    // Verificar que el formulario pertenece al funcionario activo
+    var funcRegistro = String(datos[2] || '').trim();
+    if (funcRegistro && funcRegistro !== FUNC) {
+      E('rpRes').innerHTML = '<div style="color:#B71C1C;font-size:11px">&#128274; Este formulario fue registrado por <strong>' +
+        funcRegistro + '</strong>.<br>Solo puede reimprimir formularios del funcionario activo.</div>';
+      return;
+    }
+    // Todo OK: mostrar info y boton imprimir
+    var nom = String(datos[49] || datos[48] || '\u2014');
+    var nmat = String(datos[6] || '\u2014');
+    var fecha = String(datos[8] || datos[1] || '');
+    // v4-fix: guardar datos en variable global para evitar escape en onclick
+    window._REPRINT_DATOS = datos;
+    E('rpRes').innerHTML =
+      '<div style="background:#F0FDF4;border:1px solid #6EE7B7;border-radius:8px;padding:10px;margin-top:6px">' +
+        '<div style="font-size:11px;color:#065F46;font-weight:700;margin-bottom:6px">&#10003; Registro encontrado</div>' +
+        '<div style="font-size:11px;color:#374151;line-height:1.8">' +
+          '&#128203; N\u00B0: <strong>' + nro + '</strong><br>' +
+          '&#128203; Matriz: <strong>' + nmat + '</strong><br>' +
+          '&#128100; Cliente: <strong>' + nom + '</strong><br>' +
+          '&#128197; Fecha Op.: <strong>' + fecha + '</strong>' +
+        '</div>' +
+        '<button class="btn bp" style="margin-top:10px;width:100%" onclick="doReprintExec()">' +
+          '\uD83D\uDDA8 Imprimir este formulario</button>' +
+      '</div>';
+  });
+}
+
+function doReprintExec() {
+  var datos = window._REPRINT_DATOS;
+  if (!datos) { showAlert('\u274C','Error','No hay datos para reimprimir.',false); return; }
+  closeReprint();
+  doPrintDatos(datos);
+}
+
+// doPrint usa el formulario activo
+function doPrint() { doPrintDatos(collectData()); }
 
 function resetSoloInterviniente() {
   // Limpiar SOLO búsqueda e identificación del cliente (Sección II)
