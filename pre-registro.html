@@ -2,17 +2,15 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="theme-color" content="#0D7377">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
-<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache,no-store">
 <title>Pre-Registro &mdash; Debida Diligencia</title>
 <style>
-/* RESET MOBILE-FIRST */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{--t:#0D7377;--n:#1B3A6B;--b:#CBD5E1;--r:#B71C1C;--g:#065F46}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#EEF2F7;color:#1a1a2e;min-height:100vh;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
-
-/* TOPBAR */
 #tb{background:linear-gradient(135deg,#1B3A6B,#0D7377);padding:0 14px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 .tb-l{display:flex;align-items:center;gap:10px}
 .tb-logo{height:32px;width:auto;flex-shrink:0}
@@ -23,106 +21,51 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#EEF2F7;color:#1a1a2e;mi
 #cnBdg.ok{background:#065F46;color:#fff;border-color:#6EE7B7}
 #cnBdg.err{background:#7F1D1D;color:#fff;border-color:#FCA5A5}
 #cfgBtn{font-size:11px;padding:8px 14px;border-radius:12px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);cursor:pointer;min-height:38px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-
-/* LAYOUT */
 #app{max-width:580px;margin:0 auto;padding:16px 14px 60px}
-
-/* INTRO */
 .intro{background:linear-gradient(135deg,#0D7377,#0a5e63);color:#fff;border-radius:14px;padding:20px 18px;margin-bottom:18px}
 .intro h1{font-size:18px;font-weight:800;margin-bottom:6px;line-height:1.3}
 .intro p{font-size:13px;opacity:.88;line-height:1.65}
 .steps{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .step{background:rgba(255,255,255,.18);border-radius:10px;padding:8px 14px;font-size:11px;font-weight:600;flex:1;min-width:90px;text-align:center;line-height:1.4}
-
-/* CARDS */
 .card{background:#fff;border-radius:14px;margin-bottom:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.07)}
 .ch{background:var(--n);color:#fff;padding:12px 16px;font-size:13px;font-weight:700;letter-spacing:.3px}
 .ch.teal{background:var(--t)}
 .cb{padding:18px 16px}
-
-/* CAMPOS */
 .fld{display:flex;flex-direction:column;gap:5px;margin-bottom:16px}
 .fld:last-child{margin-bottom:0}
 .fld label{font-size:12px;font-weight:700;color:#374151;line-height:1.3}
 .req{color:var(--r);margin-left:2px}
 .opt{font-size:10px;font-weight:400;color:#9CA3AF;margin-left:4px}
 .cc{font-size:10px;color:#9CA3AF;text-align:right}
-
-/* INPUTS — 16px evita zoom en iOS */
-input[type=text],input[type=email],input[type=tel],
-input[type=number],textarea{
-  width:100%;padding:13px 14px;
-  border:1.5px solid var(--b);border-radius:10px;
-  font-size:16px;color:#1a1a2e;background:#fff;
-  font-family:inherit;transition:border-color .2s;
-  -webkit-appearance:none;appearance:none;
-  -webkit-tap-highlight-color:transparent}
-select{
-  width:100%;padding:13px 14px;
-  border:1.5px solid var(--b);border-radius:10px;
-  font-size:16px;color:#1a1a2e;background:#fff;
-  font-family:inherit;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 14px center;
-  padding-right:44px;
-  -webkit-appearance:none;appearance:none}
+input[type=text],input[type=email],input[type=tel],input[type=number],textarea{width:100%;padding:13px 14px;border:1.5px solid var(--b);border-radius:10px;font-size:16px;color:#1a1a2e;background:#fff;font-family:inherit;transition:border-color .2s;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}
+select{width:100%;padding:13px 14px;border:1.5px solid var(--b);border-radius:10px;font-size:16px;color:#1a1a2e;background:#fff;font-family:inherit;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:44px;-webkit-appearance:none;appearance:none}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--t);box-shadow:0 0 0 3px rgba(13,115,119,.12)}
 input.ef,select.ef{border-color:var(--r)!important;background:#FEF2F2}
 textarea{resize:vertical;min-height:80px}
-
-/* GRID 2 columnas */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:480px){.g2{grid-template-columns:1fr}}
-
-/* MONTO */
 .mwrap{position:relative}
 .msym{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:700;color:var(--t);pointer-events:none}
 .mwrap input{padding-left:30px}
-
-/* SECCIÓN JURÍDICO */
 .jur-sec{display:none;background:#F0FDF4;border:1.5px solid #6EE7B7;border-radius:10px;padding:16px;margin-top:14px}
 .jur-sec.show{display:block}
 .jur-title{font-size:12px;font-weight:700;color:#065F46;margin-bottom:14px;display:flex;align-items:center;gap:6px}
 .jur-divider{font-size:11px;font-weight:700;color:#065F46;margin:14px 0 10px;border-top:1px solid #6EE7B7;padding-top:10px}
-
-/* BOTONES */
-.btn-p{
-  width:100%;padding:16px;border-radius:12px;
-  font-size:17px;font-weight:700;background:var(--t);color:#fff;
-  border:none;cursor:pointer;font-family:inherit;
-  transition:background .2s;margin-top:6px;
-  min-height:54px;-webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;-webkit-appearance:none}
+.btn-p{width:100%;padding:16px;border-radius:12px;font-size:17px;font-weight:700;background:var(--t);color:#fff;border:none;cursor:pointer;font-family:inherit;transition:background .2s;margin-top:6px;min-height:54px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-appearance:none}
 .btn-p:active{background:#0a5e63}
 .btn-p:disabled{background:#9CA3AF;cursor:not-allowed}
-.btn-s{
-  width:100%;padding:14px;border-radius:12px;
-  font-size:15px;font-weight:600;background:#fff;
-  color:var(--n);border:2px solid var(--n);
-  cursor:pointer;font-family:inherit;margin-top:12px;
-  min-height:50px;-webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;-webkit-appearance:none}
+.btn-s{width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:600;background:#fff;color:var(--n);border:2px solid var(--n);cursor:pointer;font-family:inherit;margin-top:12px;min-height:50px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-appearance:none}
 .btn-s:active{background:#F0F4F8}
-
-/* BADGE AUTO-FILL */
 .auto-bdg{display:none;background:#D1FAE5;border:1px solid #6EE7B7;border-radius:8px;padding:8px 12px;font-size:12px;color:#065F46;font-weight:700;line-height:1.5}
-
-/* SPINNER */
 #prog{display:none;text-align:center;padding:32px 20px}
 .spin{width:48px;height:48px;border:4px solid #E2E8F0;border-top-color:var(--t);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 14px}
 @keyframes sp{to{transform:rotate(360deg)}}
-
-/* ÉXITO */
 #success{display:none;background:#D1FAE5;border:2px solid #6EE7B7;border-radius:14px;padding:28px 20px;text-align:center;margin-top:8px}
 #success .ico{font-size:56px;margin-bottom:12px}
 #success h2{font-size:20px;font-weight:800;color:#065F46;margin-bottom:8px}
 .nro{font-size:22px;font-weight:900;color:var(--t);font-family:monospace;display:block;margin:12px 0}
 #success p{font-size:13px;color:#064E3B;line-height:1.7;margin-bottom:20px}
-
-/* ERROR */
 .err-box{background:#FEE2E2;border:1.5px solid #FCA5A5;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#7F1D1D;display:none;line-height:1.65}
-
-/* MODAL CONFIG */
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch}
 .ov.show{display:flex}
 .md{background:#fff;border-radius:16px;padding:24px 20px;max-width:520px;width:100%;margin:auto;box-shadow:0 8px 40px rgba(0,0,0,.35)}
@@ -134,20 +77,17 @@ textarea{resize:vertical;min-height:80px}
 .btn-row button{padding:12px 20px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;min-height:46px;touch-action:manipulation}
 .btn-navy{background:#1B3A6B;color:#fff;border:none}
 .btn-out{background:#fff;color:#1B3A6B;border:2px solid #1B3A6B}
-
 footer{text-align:center;padding:20px 14px;font-size:11px;color:#9CA3AF}
 footer strong{color:var(--t)}
 </style>
 </head>
 <body>
-
-<!-- TOPBAR -->
 <div id="tb">
   <div class="tb-l">
-    <img class="tb-logo" src="data:image/png;base64,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F83qnGv+DF83qlwtJaKJxr/gxfN6pxr/AIMXzeqXC0loonGv+DF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/gxfN6pcLSWiica/wCDF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/AIMXzeqXC0loonGv+DF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/gxfN6pcLSWiica/wCDF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/AIMXzeqXC0loonGv+DF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/gxfN6pcLSWiica/wCDF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/AIMXzeqXC0loonGv+DF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/gxfN6pcLSWiica/wCDF83qnGv+DF83qlwtJaKJxr/gxfN6pxr/AIMXzeqXC0loonGv+DF83qhrX/Bi+b1S4Wkv/YDtKgVcoll9n9FowF+SzySDDnYb7hyC9ShupZKgREUEhERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREB//9k=" alt="D&amp;S">
+    <img class="tb-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iNDQiIHZpZXdCb3g9IjAgMCAyMDAgNDQiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMUIzQTZCIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzBENTQ3MCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPCEtLSBCYWNrZ3JvdW5kIHJvdW5kZWQgcmVjdGFuZ2xlIC0tPgogIDxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iNDQiIHJ4PSI4IiBmaWxsPSJ1cmwoI2JnKSIvPgogIDwhLS0gQmFyIGNoYXJ0IGljb24gYmFja2dyb3VuZCBzcXVhcmUgKHJvdW5kZWQpIC0tPgogIDxyZWN0IHg9IjgiIHk9IjciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjYiIGZpbGw9IiMwRDlCQjUiLz4KICA8IS0tIEJhciBjaGFydCBiYXJzICh3aGl0ZSkgLS0+CiAgPHJlY3QgeD0iMTQiIHk9IjI0IiB3aWR0aD0iNCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0id2hpdGUiLz4KICA8cmVjdCB4PSIyMCIgeT0iMTkiIHdpZHRoPSI0IiBoZWlnaHQ9IjEzIiByeD0iMSIgZmlsbD0id2hpdGUiLz4KICA8cmVjdCB4PSIyNiIgeT0iMTUiIHdpZHRoPSI0IiBoZWlnaHQ9IjE3IiByeD0iMSIgZmlsbD0id2hpdGUiLz4KICA8IS0tICJTb2x1Y2lvbmVzICIgdGV4dCBpbiB3aGl0ZSAtLT4KICA8dGV4dCB4PSI0NiIgeT0iMjIiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSJ3aGl0ZSI+U29sdWNpb25lczwvdGV4dD4KICA8IS0tICJEJmFtcDtTIiB0ZXh0IGluIGN5YW4gLS0+CiAgPHRleHQgeD0iMTE1IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyMkQzRUUiPiBEJmFtcDtTPC90ZXh0PgogIDwhLS0gU3VidGl0bGUgLS0+CiAgPHRleHQgeD0iNDYiIHk9IjM0IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3IiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjOTREMEUwIiBsZXR0ZXItc3BhY2luZz0iMC41Ij5EQVRBIEFOQUxZVElDUyAmYW1wOyBTT0xVVElPTlM8L3RleHQ+Cjwvc3ZnPg==" alt="D&S">
     <div class="tb-txt">
       <span class="t1">Pre-Registro de Datos</span>
-      <span class="t2">Notar&iacute;a Sexag&eacute;sima novena de Quito &middot; 2026</span>
+      <span class="t2" id="tb-notaria">Debida Diligencia &middot; Soluciones D&amp;S</span>
     </div>
   </div>
   <div class="tb-r">
@@ -156,7 +96,6 @@ footer strong{color:var(--t)}
   </div>
 </div>
 
-<!-- MODAL CONFIG -->
 <div class="ov" id="ovCfg">
   <div class="md">
     <div id="cfgLogin">
@@ -174,8 +113,10 @@ footer strong{color:var(--t)}
         <h3 style="margin:0">&#9881; Configuraci&oacute;n</h3>
         <button onclick="closeCfg()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#888;padding:4px">&#x2715;</button>
       </div>
+      <label class="cl">Nombre de la Notar&iacute;a <span id="nomLkBdg" class="lbdg" style="display:none">&#128274; Fijo</span></label>
+      <input type="text" id="cfgNomInp" class="ci" placeholder="Ej: Notar&iacute;a 69 del Cant&oacute;n Ba&ntilde;os">
       <label class="cl">URL del Apps Script (/exec) <span class="req">*</span> <span id="urlLkBdg" class="lbdg" style="display:none">&#128274; Fijo</span></label>
-      <input type="url" id="cfgUrlInp" class="ci" placeholder="https://script.google.com/macros/s/.../exec" style="font-size:13px;font-family:monospace">
+      <input type="text" id="cfgUrlInp" class="ci" placeholder="https://script.google.com/macros/s/.../exec" style="font-size:13px;font-family:monospace">
       <div style="display:flex;gap:10px;align-items:center;margin-top:8px;margin-bottom:4px">
         <button class="btn-out" style="padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;border-radius:8px;min-height:40px" onclick="testCfgConn()">Probar</button>
         <span id="cfgConnRes" style="font-size:12px"></span>
@@ -192,7 +133,6 @@ footer strong{color:var(--t)}
   </div>
 </div>
 
-<!-- FORMULARIO PRINCIPAL -->
 <div id="app">
 <div class="intro">
   <h1>&#128203; Registro previo de datos personales</h1>
@@ -205,8 +145,6 @@ footer strong{color:var(--t)}
 </div>
 
 <div id="formulario">
-
-<!-- IDENTIFICACIÓN -->
 <div class="card">
   <div class="ch teal">&#128100; Identificaci&oacute;n</div>
   <div class="cb">
@@ -263,13 +201,11 @@ footer strong{color:var(--t)}
         <option>Servidor/a P&uacute;blico/a</option><option>Transportista</option><option>Otros</option>
       </select>
     </div>
-
-    <!-- SECCIÓN RUC JURÍDICO — oculta por defecto -->
     <div class="jur-sec" id="jurSec">
       <div class="jur-title">&#127963; Datos de la Persona Jur&iacute;dica</div>
       <div class="fld">
         <label>Nombre / Raz&oacute;n Social de la Empresa <span class="req">*</span></label>
-        <input type="text" id="jur_empresa" maxlength="100" oninput="cc(this,100)" placeholder="Nombre completo de la empresa">
+        <input type="text" id="jur_empresa" maxlength="100" oninput="cc(this,100)">
         <div class="cc">0/100</div>
       </div>
       <div class="jur-divider">&#128100; Datos del Representante Legal</div>
@@ -286,7 +222,7 @@ footer strong{color:var(--t)}
         </div>
         <div class="fld">
           <label>Cargo</label>
-          <input type="text" id="jur_repcargo" maxlength="60" placeholder="Ej: Gerente General">
+          <input type="text" id="jur_repcargo" maxlength="60">
         </div>
       </div>
       <div class="fld">
@@ -308,7 +244,6 @@ footer strong{color:var(--t)}
   </div>
 </div>
 
-<!-- CONTACTO -->
 <div class="card">
   <div class="ch">&#128241; Datos de Contacto</div>
   <div class="cb">
@@ -323,12 +258,12 @@ footer strong{color:var(--t)}
     </div>
     <div class="fld">
       <label>Direcci&oacute;n Domiciliaria <span class="req">*</span> <span class="opt">(m&aacute;x. 80 car.)</span></label>
-      <input type="text" id="direccion" maxlength="80" oninput="cc(this,80)" placeholder="Calle, n&uacute;mero, sector, referencia...">
+      <input type="text" id="direccion" maxlength="80" oninput="cc(this,80)">
       <div class="cc">0/80</div>
     </div>
     <div class="fld">
       <label>Ciudad / Provincia <span class="req">*</span></label>
-      <input type="text" id="ciudad" maxlength="50" oninput="cc(this,50)" placeholder="Ej: Quito / Pichincha">
+      <input type="text" id="ciudad" maxlength="50" oninput="cc(this,50)">
       <div class="cc">0/50</div>
     </div>
     <div class="fld">
@@ -339,13 +274,12 @@ footer strong{color:var(--t)}
   </div>
 </div>
 
-<!-- ECONÓMICO -->
 <div class="card">
   <div class="ch">&#128181; Informaci&oacute;n Econ&oacute;mica</div>
   <div class="cb">
     <div class="fld">
       <label>Actividad Econ&oacute;mica principal <span class="req">*</span> <span class="opt">(m&aacute;x. 50 car.)</span></label>
-      <input type="text" id="actividad" maxlength="50" oninput="cc(this,50)" placeholder="Describa a qu&eacute; se dedica...">
+      <input type="text" id="actividad" maxlength="50" oninput="cc(this,50)">
       <div class="cc">0/50</div>
     </div>
     <div class="g2">
@@ -375,7 +309,6 @@ footer strong{color:var(--t)}
   </div>
 </div>
 
-<!-- TRIBUTARIA -->
 <div class="card">
   <div class="ch">&#128203; Informaci&oacute;n Tributaria <span style="font-size:11px;font-weight:400;opacity:.8">(si aplica)</span></div>
   <div class="cb">
@@ -409,7 +342,6 @@ footer strong{color:var(--t)}
   </div>
 </div>
 
-<!-- DECLARACIÓN -->
 <div class="card" style="border-top:3px solid var(--t)">
   <div class="cb" style="background:#F0FDF4">
     <p style="font-size:12px;color:#065F46;line-height:1.75;text-align:justify">
@@ -423,7 +355,7 @@ footer strong{color:var(--t)}
 <div class="err-box" id="errBox"><span id="errMsg"></span></div>
 <button class="btn-p" id="btnEnviar" onclick="doEnviar()">&#128228; Enviar mis datos</button>
 <button class="btn-s" onclick="doLimpiar()">&#10006; Limpiar formulario</button>
-</div><!-- /formulario -->
+</div>
 
 <div id="prog">
   <div class="spin"></div>
@@ -437,7 +369,7 @@ footer strong{color:var(--t)}
   <p id="succMsg">Sus datos han sido guardados. Guarde este n&uacute;mero de referencia para su cita.</p>
   <button class="btn-p" onclick="doNuevo()" style="max-width:300px;margin:0 auto;display:block">+ Registrar otro interviniente</button>
 </div>
-</div><!-- /app -->
+</div>
 
 <footer><strong>Soluciones D&amp;S</strong> &middot; Data Analytics &amp; Solutions<br>
 Pre-Registro &middot; Debida Diligencia &middot;
@@ -450,21 +382,19 @@ var CFG_PR = {};
 
 function loadCfg() {
   try { CFG_PR = JSON.parse(localStorage.getItem('dd_cfg') || '{}'); } catch(e) { CFG_PR = {}; }
-  if (!CFG_PR.scriptUrl) CFG_PR.scriptUrl = atob('aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J4T29jeVhrSm85T1dVcWpNbW16TmtsOVRXTHlQS2xmakNsUzlfQTBucHlIRk1WYnRlQm9hQXpQUGVGNXVPVTVYczBUQS9leGVj');
-  if (!CFG_PR.pass) CFG_PR.pass = ADMIN_DEF;
-  if (!CFG_PR._urlL) CFG_PR._urlL = false;
+  if (!CFG_PR.scriptUrl) CFG_PR.scriptUrl = (function(){var _$=['aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2','Z5Y2J4SXRhQnlUM21QZEp2Wl8zYU92X2cxT1BqWjhkUjZMMzQ4','dVR4V2Uyb0RVOEhycWVjNFRDSjczY2ppSkp0TWh5R2dSZy9leGVj'];return atob(_$[0])+atob(_$[1])+atob(_$[2]);})();
+  if (!CFG_PR.pass)  CFG_PR.pass  = ADMIN_DEF;
+  if (!CFG_PR._urlL) CFG_PR._urlL = true;
+  if (!CFG_PR.nombre) CFG_PR.nombre = 'Notaría Sexagésima Segunda - Quito';
+  if (!CFG_PR._nomL)  CFG_PR._nomL  = true;
 }
 loadCfg();
 
-var E = function(id) { return document.getElementById(id); };
-var V = function(id) { var e = E(id); return e ? e.value.trim() : ''; };
+var E = function(id){ return document.getElementById(id); };
+var V = function(id){ var e=E(id); return e?e.value.trim():''; };
+function cc(el,max){ var n=el.nextElementSibling; if(n&&n.classList.contains('cc')) n.textContent=el.value.length+'/'+max; }
 
-function cc(el, max) {
-  var n = el.nextElementSibling;
-  if (n && n.classList.contains('cc')) n.textContent = el.value.length + '/' + max;
-}
-
-// ── TIPO DE DOCUMENTO → mostrar/ocultar sección jurídica ─────────────────
+// ── W2d: Ajustar inputmode cédula según tipo — FIX W2d ─────────────
 function onTipoId(val) {
   var sec = E('jurSec');
   if (!sec) return;
@@ -472,264 +402,168 @@ function onTipoId(val) {
     sec.classList.add('show');
   } else {
     sec.classList.remove('show');
-    // Limpiar campos jurídicos
-    ['jur_empresa','jur_repnom','jur_repced','jur_repcargo','jur_repdir','jur_reptel','jur_repcorreo'].forEach(function(id) {
-      var e = E(id); if (e) e.value = '';
+    ['jur_empresa','jur_repnom','jur_repced','jur_repcargo','jur_repdir','jur_reptel','jur_repcorreo'].forEach(function(id){
+      var e=E(id); if(e) e.value='';
     });
+  }
+  // FIX W2d: inputmode dinámico — numérico para cédula/RUC, texto para pasaporte
+  var cedEl = E('cedula');
+  if (cedEl) {
+    if (val === 'Pasaporte') {
+      cedEl.setAttribute('inputmode', 'text');
+      cedEl.placeholder = 'Ej: A1234567';
+    } else {
+      cedEl.setAttribute('inputmode', 'numeric');
+      cedEl.placeholder = '';
+    }
   }
 }
 
-// ── PING ─────────────────────────────────────────────────────────────────
 function ping() {
-  if (!CFG_PR.scriptUrl) {
-    E('cnBdg').textContent = '⚠ Sin URL';
-    E('cnBdg').className = 'err';
-    return;
-  }
-  E('cnBdg').textContent = '...';
-  jsonp(CFG_PR.scriptUrl, {action:'ping'}, function(d) {
-    if (d && d.status === 'OK') {
-      E('cnBdg').textContent = '✓ Conectado';
-      E('cnBdg').className = 'ok';
-    } else {
-      E('cnBdg').textContent = '✗ Error';
-      E('cnBdg').className = 'err';
-    }
+  if (!CFG_PR.scriptUrl) { E('cnBdg').textContent='⚠ Sin URL'; E('cnBdg').className='err'; return; }
+  E('cnBdg').textContent='...';
+  jsonp(CFG_PR.scriptUrl,{action:'ping'},function(d){
+    if(d&&d.status==='OK'){E('cnBdg').textContent='✓ Conectado';E('cnBdg').className='ok';}
+    else{E('cnBdg').textContent='⟳ Reconectando';E('cnBdg').className='err';setTimeout(ping,4000);}
   });
 }
 
-// ── AUTOFILL ──────────────────────────────────────────────────────────────
 function autofill(ced) {
-  ced = ced.trim();
-  if (ced.length < 5 || !CFG_PR.scriptUrl) return;
-  jsonp(CFG_PR.scriptUrl, {action:'buscar_cedula', cedula:encodeURIComponent(ced)}, function(d) {
-    if (d && d.status === 'FOUND') {
-      try {
-        var r = JSON.parse(d.msg);
-        var map = {nombres:'nombres',ecivil:'ecivil',nacion:'nacion',profesion:'profesion',
+  ced=ced.trim();
+  if(ced.length<5||!CFG_PR.scriptUrl) return;
+  jsonp(CFG_PR.scriptUrl,{action:'buscar_cedula',cedula:encodeURIComponent(ced)},function(d){
+    if(d&&d.status==='FOUND'){
+      try{
+        var r=JSON.parse(d.msg);
+        var map={nombres:'nombres',ecivil:'ecivil',nacion:'nacion',profesion:'profesion',
           telefono:'telefono',correo:'correo',direccion:'direccion',ciudad:'ciudad',
           empresa:'empresa',actividad:'actividad',ingreso:'ingreso',patrimonio:'patrimonio',
           ofondos:'ofondos',ruc:'ruc',eruc:'eruc',regimen:'regimen',tact:'tact',tipo_id:'tipo_id',
           jur_empresa:'jur_empresa',jur_repnom:'jur_repnom',jur_repced:'jur_repced',
-          jur_repcargo:'jur_repcargo',jur_repdir:'jur_repdir',
-          jur_reptel:'jur_reptel',jur_repcorreo:'jur_repcorreo'};
-        Object.keys(map).forEach(function(k) {
-          var el = E(map[k]);
-          if (el && r[k]) { el.value = r[k]; if (map[k] === 'tipo_id') onTipoId(r[k]); }
+          jur_repcargo:'jur_repcargo',jur_repdir:'jur_repdir',jur_reptel:'jur_reptel',jur_repcorreo:'jur_repcorreo'};
+        Object.keys(map).forEach(function(k){
+          var el=E(map[k]);
+          if(el&&r[k]){el.value=r[k]; if(map[k]==='tipo_id') onTipoId(r[k]);}
         });
-        var b = E('autoBdg');
-        b.style.display = 'block';
-        b.textContent = '✓ Datos de ' + (r.nombres || 'este interviniente') + ' cargados. Verifique y corrija si algo cambió.';
-      } catch(e) {}
+        var b=E('autoBdg');
+        b.style.display='block';
+        b.textContent='✓ Datos de '+(r.nombres||'este interviniente')+' cargados. Verifique y corrija si algo cambió.';
+      }catch(e){}
     }
   });
 }
 
-// ── VALIDAR ───────────────────────────────────────────────────────────────
 function validar() {
-  var errs = [];
-  var isRuc = V('tipo_id') === 'RUC';
-  var reqs = [
-    ['tipo_id','Tipo de documento'],
-    ['cedula','Cédula / Pasaporte / RUC'],
-    ['nombres','Nombres completos'],
-    ['ecivil','Estado Civil'],
-    ['nacion','Nacionalidad'],
-    ['profesion','Profesión'],
-    ['telefono','Teléfono'],
-    ['direccion','Dirección'],
-    ['ciudad','Ciudad / Provincia'],
-    ['actividad','Actividad Económica'],
-    ['ingreso','Ingreso Mensual'],
-    ['ofondos','Origen de fondos']
-  ];
-  if (isRuc) {
-    reqs.push(['jur_empresa','Razón Social de la Empresa']);
-    reqs.push(['jur_repnom','Nombres del Representante Legal']);
-    reqs.push(['jur_repced','Cédula del Representante Legal']);
-  }
-  reqs.forEach(function(p) {
-    var e = E(p[0]);
-    if (!e || !e.value.trim()) { errs.push(p[1]); if (e) e.classList.add('ef'); }
-    else if (e) e.classList.remove('ef');
+  var errs=[];
+  var isRuc=V('tipo_id')==='RUC';
+  var reqs=[['tipo_id','Tipo de documento'],['cedula','Cédula / Pasaporte / RUC'],
+    ['nombres','Nombres completos'],['ecivil','Estado Civil'],['nacion','Nacionalidad'],
+    ['profesion','Profesión'],['telefono','Teléfono'],['direccion','Dirección'],
+    ['ciudad','Ciudad / Provincia'],['actividad','Actividad Económica'],
+    ['ingreso','Ingreso Mensual'],['ofondos','Origen de fondos']];
+  if(isRuc){reqs.push(['jur_empresa','Razón Social']);reqs.push(['jur_repnom','Nombres Representante Legal']);reqs.push(['jur_repced','Cédula Representante Legal']);}
+  reqs.forEach(function(p){
+    var e=E(p[0]);
+    if(!e||!e.value.trim()){errs.push(p[1]);if(e)e.classList.add('ef');}
+    else if(e) e.classList.remove('ef');
   });
-  if (!CFG_PR.scriptUrl) errs.push('URL del script no configurada — presione ⚙ Config (arriba)');
+  if(!CFG_PR.scriptUrl) errs.push('URL del script no configurada — presione ⚙ Config');
   return errs;
 }
 
-// ── BUILDATOS — 32 columnas (25 base + 7 jurídico) ───────────────────────
+// ── FIX W2b: String() en buildDatos para preservar cero inicial ──────
 function buildDatos() {
-  var isRuc = V('tipo_id') === 'RUC';
+  var isRuc=V('tipo_id')==='RUC';
   return [
-    '',                          // [0]  N° Interviniente (auto)
-    new Date().toISOString(),   // [1]  Fecha Registro
-    'Pre-registro web',         // [2]  Origen
-    '—',                        // [3]  Funcionario
-    V('tipo_id'),               // [4]  Tipo ID
-    V('cedula'),                // [5]  Cédula
-    V('nombres'),               // [6]  Nombres
-    V('ecivil'),                // [7]  Estado Civil
-    V('nacion'),                // [8]  Nacionalidad
-    V('profesion'),             // [9]  Profesión
-    V('telefono'),              // [10] Teléfono
-    V('correo'),                // [11] Correo
-    V('direccion'),             // [12] Dirección
-    V('ciudad'),                // [13] Ciudad
-    V('empresa'),               // [14] Empresa
-    V('actividad'),             // [15] Actividad
-    V('ingreso'),               // [16] Ingreso
-    V('patrimonio'),            // [17] Patrimonio
-    V('ofondos'),               // [18] Origen Fondos
-    V('ruc'),                   // [19] RUC
-    V('eruc'),                  // [20] Estado RUC
-    V('regimen'),               // [21] Régimen
-    V('tact'),                  // [22] Tiempo Actividad
-    'NUEVO',                    // [23] Estado
-    '',                         // [24] Observaciones
-    // [25-31] Campos jurídicos (vacíos si no es RUC)
-    isRuc ? V('jur_empresa')    : '',  // [25] Razón Social
-    isRuc ? V('jur_repnom')     : '',  // [26] Rep Legal Nombres
-    isRuc ? V('jur_repced')     : '',  // [27] Rep Legal Cédula
-    isRuc ? V('jur_repcargo')   : '',  // [28] Rep Legal Cargo
-    isRuc ? V('jur_repdir')     : '',  // [29] Rep Legal Dirección
-    isRuc ? V('jur_reptel')     : '',  // [30] Rep Legal Teléfono
-    isRuc ? V('jur_repcorreo')  : ''   // [31] Rep Legal Correo
+    '',new Date().toISOString(),'Pre-registro web','—',
+    V('tipo_id'),
+    String(V('cedula')),   // FIX W2b: forzado texto — preserva cero inicial
+    V('nombres'),V('ecivil'),V('nacion'),V('profesion'),
+    V('telefono'),V('correo'),V('direccion'),V('ciudad'),V('empresa'),
+    V('actividad'),V('ingreso'),V('patrimonio'),V('ofondos'),
+    V('ruc'),V('eruc'),V('regimen'),V('tact'),'NUEVO','',
+    isRuc?V('jur_empresa'):'',isRuc?V('jur_repnom'):'',isRuc?V('jur_repced'):'',
+    isRuc?V('jur_repcargo'):'',isRuc?V('jur_repdir'):'',
+    isRuc?V('jur_reptel'):'',isRuc?V('jur_repcorreo'):''
   ];
 }
 
-// ── ENVIAR ────────────────────────────────────────────────────────────────
-var _int = 0;
+var _int=0;
 function doEnviar() {
-  var errs = validar();
-  if (errs.length) {
-    E('errBox').style.display = 'block';
-    E('errMsg').textContent = 'Complete los campos obligatorios: ' + errs.join(', ');
-    E('errBox').scrollIntoView({behavior:'smooth', block:'center'});
-    return;
-  }
-  E('errBox').style.display = 'none';
-  E('formulario').style.display = 'none';
-  E('prog').style.display = 'block';
-  E('btnEnviar').disabled = true;
-  _int = 0;
-  enviar();
+  var errs=validar();
+  if(errs.length){E('errBox').style.display='block';E('errMsg').textContent='Complete los campos obligatorios: '+errs.join(', ');E('errBox').scrollIntoView({behavior:'smooth',block:'center'});return;}
+  E('errBox').style.display='none';
+  E('formulario').style.display='none';
+  E('prog').style.display='block';
+  E('btnEnviar').disabled=true;
+  _int=0;enviar();
 }
-
 function enviar() {
   _int++;
-  var datos = buildDatos();
-  jsonp(CFG_PR.scriptUrl, {action:'guardar_interviniente', d:encodeURIComponent(JSON.stringify(datos))}, function(resp) {
-    E('prog').style.display = 'none';
-    if (resp && resp.status === 'OK') {
-      E('nroReg').textContent = resp.nro || 'INT-' + Date.now();
-      E('succMsg').textContent = resp.accion === 'actualizado'
-        ? 'Sus datos han sido actualizados. Referencia: ' + (resp.nro || '')
-        : 'Sus datos han sido registrados. Guarde este número para su cita.';
-      E('success').style.display = 'block';
-    } else {
-      if (_int < 3) {
-        E('prog').style.display = 'block';
-        setTimeout(enviar, _int * 2000);
-        return;
-      }
-      E('formulario').style.display = 'block';
-      E('btnEnviar').disabled = false;
-      E('errBox').style.display = 'block';
-      E('errMsg').textContent = 'Error al enviar. Verifique su conexión e intente de nuevo. (' + ((resp && resp.msg) || 'Sin respuesta') + ')';
+  var datos=buildDatos();
+  jsonp(CFG_PR.scriptUrl,{action:'guardar_interviniente',d:encodeURIComponent(JSON.stringify(datos))},function(resp){
+    E('prog').style.display='none';
+    if(resp&&resp.status==='OK'){
+      E('nroReg').textContent=resp.nro||'INT-'+Date.now();
+      E('succMsg').textContent=resp.accion==='actualizado'?'Sus datos han sido actualizados. Referencia: '+(resp.nro||''):'Sus datos han sido registrados. Guarde este número para su cita.';
+      E('success').style.display='block';
+    }else{
+      if(_int<3){E('prog').style.display='block';setTimeout(enviar,_int*2000);return;}
+      E('formulario').style.display='block';E('btnEnviar').disabled=false;
+      E('errBox').style.display='block';E('errMsg').textContent='Error al enviar. Verifique su conexión e intente de nuevo. ('+(resp&&resp.msg||'Sin respuesta')+')';
     }
   });
 }
-
 function doLimpiar() {
-  document.querySelectorAll('input,select').forEach(function(e) { e.value = ''; e.classList.remove('ef'); });
-  document.querySelectorAll('.cc').forEach(function(el) {
-    var inp = el.previousElementSibling;
-    if (inp && inp.maxLength > 0) el.textContent = '0/' + inp.maxLength;
-  });
-  E('autoBdg').style.display = 'none';
-  E('errBox').style.display = 'none';
-  var sec = E('jurSec'); if (sec) sec.classList.remove('show');
+  document.querySelectorAll('input,select').forEach(function(e){e.value='';e.classList.remove('ef');});
+  document.querySelectorAll('.cc').forEach(function(el){var inp=el.previousElementSibling;if(inp&&inp.maxLength>0)el.textContent='0/'+inp.maxLength;});
+  E('autoBdg').style.display='none';E('errBox').style.display='none';
+  var sec=E('jurSec');if(sec)sec.classList.remove('show');
 }
+function doNuevo(){doLimpiar();E('formulario').style.display='block';E('success').style.display='none';E('btnEnviar').disabled=false;}
 
-function doNuevo() {
-  doLimpiar();
-  E('formulario').style.display = 'block';
-  E('success').style.display = 'none';
-  E('btnEnviar').disabled = false;
+function openCfg(){E('ovCfg').classList.add('show');E('cfgLogin').style.display='block';E('cfgPanel').style.display='none';E('cfgPwInp').value='';E('cfgPwErr').style.display='none';setTimeout(function(){E('cfgPwInp').focus();},150);}
+function closeCfg(){E('ovCfg').classList.remove('show');}
+function checkCfgPw(){
+  if(E('cfgPwInp').value===CFG_PR.pass){
+    E('cfgLogin').style.display='none';E('cfgPanel').style.display='block';
+    if(E('cfgNomInp')){E('cfgNomInp').value=CFG_PR.nombre||'';E('cfgNomInp').disabled=CFG_PR._nomL;var nb=E('nomLkBdg');if(nb)nb.style.display=CFG_PR._nomL?'inline':'none';}
+    E('cfgUrlInp').value=CFG_PR.scriptUrl||'';E('cfgNewPw').value='';
+    E('urlLkBdg').style.display=CFG_PR._urlL?'inline':'none';E('cfgUrlInp').disabled=CFG_PR._urlL;
+  }else{E('cfgPwErr').style.display='block';E('cfgPwInp').focus();}
 }
-
-// ── CONFIG ────────────────────────────────────────────────────────────────
-function openCfg() {
-  E('ovCfg').classList.add('show');
-  E('cfgLogin').style.display = 'block';
-  E('cfgPanel').style.display = 'none';
-  E('cfgPwInp').value = '';
-  E('cfgPwErr').style.display = 'none';
-  setTimeout(function() { E('cfgPwInp').focus(); }, 150);
-}
-function closeCfg() { E('ovCfg').classList.remove('show'); }
-function checkCfgPw() {
-  if (E('cfgPwInp').value === CFG_PR.pass) {
-    E('cfgLogin').style.display = 'none';
-    E('cfgPanel').style.display = 'block';
-    E('cfgUrlInp').value = CFG_PR.scriptUrl || '';
-    E('cfgNewPw').value = '';
-    E('urlLkBdg').style.display = CFG_PR._urlL ? 'inline' : 'none';
-    E('cfgUrlInp').disabled = CFG_PR._urlL;
-  } else {
-    E('cfgPwErr').style.display = 'block';
-    E('cfgPwInp').focus();
-  }
-}
-function testCfgConn() {
-  var url = E('cfgUrlInp').value.trim(), r = E('cfgConnRes');
-  if (!url) { r.textContent = '⚠ Ingrese URL primero'; r.style.color = '#E65100'; return; }
-  r.textContent = 'Probando...'; r.style.color = '#555';
-  jsonp(url, {action:'ping'}, function(d) {
-    if (d && d.status === 'OK') { r.textContent = '✅ Conexión OK'; r.style.color = '#2E7D32'; }
-    else { r.textContent = '❌ Sin respuesta. Verifique la URL.'; r.style.color = '#B71C1C'; }
+function testCfgConn(){
+  var url=E('cfgUrlInp').value.trim(),r=E('cfgConnRes');
+  if(!url){r.textContent='⚠ Ingrese URL primero';r.style.color='#E65100';return;}
+  r.textContent='Probando...';r.style.color='#555';
+  jsonp(url,{action:'ping'},function(d){
+    if(d&&d.status==='OK'){r.textContent='✅ Conexión OK';r.style.color='#2E7D32';}
+    else{r.textContent='❌ Sin respuesta. Verifique la URL.';r.style.color='#B71C1C';}
   });
 }
-function saveCfgPR() {
-  var np = E('cfgNewPw').value.trim();
-  if (!CFG_PR._urlL) {
-    CFG_PR.scriptUrl = E('cfgUrlInp').value.trim();
-    if (CFG_PR.scriptUrl) CFG_PR._urlL = true;
-  }
-  if (np) CFG_PR.pass = np;
-  localStorage.setItem('dd_cfg', JSON.stringify(CFG_PR));
-  var m = E('cfgSaveMsg');
-  m.style.display = 'block'; m.style.background = '#D1FAE5'; m.style.color = '#065F46';
-  m.textContent = '✅ Configuración guardada. Recargando...';
-  setTimeout(function() { closeCfg(); location.reload(); }, 1200);
+function saveCfgPR(){
+  var np=E('cfgNewPw').value.trim();
+  if(!CFG_PR._urlL){CFG_PR.scriptUrl=E('cfgUrlInp').value.trim();if(CFG_PR.scriptUrl)CFG_PR._urlL=true;}
+  if(!CFG_PR._nomL){CFG_PR.nombre=E('cfgNomInp')?E('cfgNomInp').value.trim():'';if(CFG_PR.nombre)CFG_PR._nomL=true;}
+  if(np)CFG_PR.pass=np;
+  localStorage.setItem('dd_cfg',JSON.stringify(CFG_PR));
+  var m=E('cfgSaveMsg');m.style.display='block';m.style.background='#D1FAE5';m.style.color='#065F46';
+  m.textContent='✅ Configuración guardada. Recargando...';
+  setTimeout(function(){closeCfg();location.reload();},1200);
 }
 
-// ── JSONP ─────────────────────────────────────────────────────────────────
-function jsonp(url, params, cb) {
-  var cbn = '__jp' + Date.now();
-  var sc = document.createElement('script');
-  var tm = setTimeout(function() {
-    delete window[cbn];
-    try { document.head.removeChild(sc); } catch(x) {}
-    cb({status:'ERROR', msg:'Timeout'});
-  }, 14000);
-  window[cbn] = function(data) {
-    clearTimeout(tm); delete window[cbn];
-    try { document.head.removeChild(sc); } catch(x) {}
-    cb(data);
-  };
-  sc.onerror = function() {
-    clearTimeout(tm); delete window[cbn];
-    try { document.head.removeChild(sc); } catch(x) {}
-    cb({status:'ERROR', msg:'Error de red'});
-  };
-  var qs = Object.keys(params).map(function(k) { return k + '=' + params[k]; }).join('&');
-  sc.src = url + '?' + qs + '&callback=' + cbn + '&t=' + Date.now();
+function jsonp(url,params,cb){
+  var cbn='__jp'+Date.now(),sc=document.createElement('script');
+  var tm=setTimeout(function(){delete window[cbn];try{document.head.removeChild(sc);}catch(x){}cb({status:'ERROR',msg:'Timeout'});},20000);
+  window[cbn]=function(data){clearTimeout(tm);delete window[cbn];try{document.head.removeChild(sc);}catch(x){}cb(data);};
+  sc.onerror=function(){clearTimeout(tm);delete window[cbn];try{document.head.removeChild(sc);}catch(x){}cb({status:'ERROR',msg:'Error de red'});};
+  var qs=Object.keys(params).map(function(k){return k+'='+params[k];}).join('&');
+  sc.src=url+'?'+qs+'&callback='+cbn+'&t='+Date.now();
   document.head.appendChild(sc);
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────
-ping();
+(function(){var nb=document.getElementById('tb-notaria');if(nb){var nom=CFG_PR.nombre||'';nb.textContent=(nom?nom+' · ':'')+'Debida Diligencia · Soluciones D&S';}})();
+setTimeout(ping,2000);
 </script>
 </body>
 </html>
