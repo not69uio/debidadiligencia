@@ -323,7 +323,7 @@ function clearFiltrosReg(){
 
 function doLogin(){
   if(E('lPw').value===atob('YWRtaW4yMDI2')){
-    URL_SCRIPT = (function(){var _$=['aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2','Z5Y2J4SXRhQnlUM21QZEp2Wl8zYU92X2cxT1BqWjhkUjZMMzQ4','dVR4V2Uyb0RVOEhycWVjNFRDSjczY2ppSkp0TWh5R2dSZy9leGVj'];return atob(_$[0])+atob(_$[1])+atob(_$[2]);})();
+    URL_SCRIPT = (function(){var _$=['aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2','Z5Y2J4SXRhQnlUM21QZEp2Wl8zYU92X2cxT1BqWjhkUjZMMzQ4','dVR4V2Uyb0RVOEhycWVjNFRDSjczY2ppSkp0TWh5R2dSZy9leGVj'];return atob(_$[0]+_$[1]+_$[2]);})();
     E('login-screen').style.display='none';E('app').style.display='block';E('btnLogout').style.display='';
     E('sp').textContent='✓ Conectado';E('sp').className='ok';
     aplicarPeriodo('anio_actual');if(E('rg-periodo'))E('rg-periodo').value='anio_actual';
